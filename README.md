@@ -1,2 +1,2 @@
 # Quizz
-Custime quizz creator
+Custom quizz creator
