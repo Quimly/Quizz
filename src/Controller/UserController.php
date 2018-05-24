@@ -17,8 +17,8 @@ class UserController extends Controller
         $uManager = $this->getDoctrine()->getManager();
 
         $user = new User();
-        $user->setPseudo('nono');
-        $user->setAge(3);
+        $user->setPseudo('newUser');
+        $user->setAge(55);
 
         $uManager->persist($user);
 
