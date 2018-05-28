@@ -14,16 +14,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        $uManager = $this->getDoctrine()->getManager();
 
-        $user = new User();
-        $user->setPseudo('newUser');
-        $user->setAge(55);
-
-        $uManager->persist($user);
-
-        $uManager->flush();
-
-	    return new Response('Saved new user with id '.$user->getId());
     }
 }

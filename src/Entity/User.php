@@ -22,9 +22,14 @@ class User
     private $pseudo;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=120)
      */
-    private $age;
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=120)
+     */
+    private $email;
 
     public function getId()
     {
@@ -43,14 +48,26 @@ class User
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getPassword(): ?string
     {
-        return $this->age;
+        return $this->password;
     }
 
-    public function setAge(?int $age): self
+    public function setPassword(string $password): self
     {
-        $this->age = $age;
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
