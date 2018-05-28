@@ -14,9 +14,6 @@ class TestController extends Controller
      */
     public function index()
     {
-
-
-
 	    $user = $this->getDoctrine()->getRepository(User::class);
 
 	    $users = $user->findAll();
