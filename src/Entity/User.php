@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -56,10 +58,16 @@ class User implements UserInterface, \Serializable
 	 */
 	private $roles;
 
+   /**
+   * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="User")
+   */
+    private $quizz;
+
 	public function __construct()
 	{
 		$this->isActive = true;
 		$this->roles = array('ROLE_USER');
+		$this->quizz = new ArrayCollection();
 	}
 
     public function getId()
@@ -145,5 +153,34 @@ class User implements UserInterface, \Serializable
 	{
 		// TODO: Implement eraseCredentials() method.
 	}
+
+	 /**
+	  * @return Collection|Quizz[]
+	  */
+	 public function getQuizz(): Collection
+	 {
+	     return $this->quizz;
+	 }
+
+	 public function addQuizz(Quizz $quizz): self
+	 {
+	     if (!$this->quizz->contains($quizz)) {
+	         $this->quizz[] = $quizz;
+	         $quizz->setUser($this);
+	     }
+	     return $this;
+	 }
+
+	 public function removeQuizz(Quizz $quizz): self
+	 {
+	     if ($this->quizz->contains($quizz)) {
+	         $this->quizz->removeElement($quizz);
+	         // set the owning side to null (unless already changed)
+	         if ($quizz->getUser() === $this) {
+	             $quizz->setUser(null);
+	         }
+	     }
+	     return $this;
+	 }
 
 }
