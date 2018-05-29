@@ -24,6 +24,9 @@ security:
             pattern:    ^/
             http_basic: ~
             provider: quimly_db_provider
+            form_login:
+                login_path: login
+                check_path: login
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
@@ -34,4 +37,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+#         - { path: ^/profile, roles: ROLE_USER }
