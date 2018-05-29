@@ -11,8 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("username")
- * @UniqueEntity("email")
+ * @UniqueEntity("username", message='Ce pseudo est déjà pris')
+ * @UniqueEntity("email", message='Un compte existe déjà avec cet email')
  */
 class User implements UserInterface, \Serializable
 {
