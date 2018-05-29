@@ -74,6 +74,8 @@ div#nav-container a{
 	display: grid;
 	grid-template-areas: "l i";
 	grid-template-columns: 110px 170px;
+	position: relative;
+	width: 700px;
 }
 
 .form_main label {
@@ -90,5 +92,13 @@ div#nav-container a{
 .form_main button {
 	margin: 5px 0 0 110px;
 	width: 170px;
+}
+
+/* Messages d'erreurs */
+.form_main div ul {
+	position: absolute;
+	top: -11px;
+	left: 250px;
+	list-style-type: none;
 }
 
