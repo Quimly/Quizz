@@ -1,6 +1,6 @@
 /** BODY **/
 body {
-	margin:0px;
+	margin:0;
 	box-sizing: border-box;
 	font-family: monospace;
 }
@@ -54,5 +54,39 @@ div#nav-container li{
 div#nav-container a{
 	color: black;
 	text-decoration: none;
+}
+
+
+/** REGISTER FORM **/
+
+#form_wrap {
+	width: 84.5%;
+}
+
+#form_inscription {
+	width: 380px;
+	margin: 40px auto 40px auto;
+}
+
+#form_inscription div {
+	display: grid;
+	grid-template-areas: "l i";
+	grid-template-columns: 110px 170px;
+}
+
+#form_inscription label {
+	grid-area: l;
+	text-align: right;
+	margin: 0 10px 10px 0;
+}
+
+#form_inscription input {
+	grid-area: i;
+	margin-bottom: 7px;
+}
+
+#form_inscription button {
+	margin: 5px 0 0 110px;
+	width: 170px;
 }
 
