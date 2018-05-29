@@ -117,7 +117,8 @@ class User implements UserInterface, \Serializable
 	{
 		return serialize(array(
 			$this->id,
-			$this->username
+			$this->username,
+			$this->password
 		));
 	}
 
@@ -125,7 +126,8 @@ class User implements UserInterface, \Serializable
 	{
 		list (
 			$this->id,
-			$this->username
+			$this->username,
+			$this->password
 			) = unserialize($serialized, ['allowed_classes' => false]);
 	}
 
@@ -143,6 +145,5 @@ class User implements UserInterface, \Serializable
 	{
 		// TODO: Implement eraseCredentials() method.
 	}
-
 
 }
