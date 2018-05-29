@@ -22,11 +22,14 @@ security:
             anonymous: true
 
             pattern:    ^/
-            http_basic: ~
+#            http_basic: ~
             provider: quimly_db_provider
             form_login:
                 login_path: login
                 check_path: login
+            logout:
+                path: logout
+
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
