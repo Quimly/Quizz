@@ -9,10 +9,10 @@
     <div class="form_wrap">
 
         <form action="{{ path('login') }}" method="post" class="form_main">
-            <div><label for="username">Username:</label>
+            <div><label for="username">Pseudo</label>
                 <input type="text" id="username" name="_username" value="{{ last_username }}" /></div>
 
-            <div><label for="password">Password:</label>
+            <div><label for="password">Mot de passe</label>
                 <input type="password" id="password" name="_password" /></div>
 
             {#
@@ -21,7 +21,7 @@
                 <input type="hidden" name="_target_path" value="/account" />
             #}
 
-            <button type="submit">login</button>
+            <button type="submit">Connexion</button>
         </form>
 
     </div>
