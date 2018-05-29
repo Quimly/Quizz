@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface, \Serializable
 {
@@ -22,7 +24,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=20, unique=true)
      * @Assert\NotBlank()
-     * @Assert\NotBlank()
+     * @Assert\Regex("/^\w+$/")
      */
     private $username;
 
@@ -40,7 +42,6 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=120, unique=true)
      * @Assert\NotBlank())
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
