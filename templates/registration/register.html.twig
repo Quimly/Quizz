@@ -2,9 +2,9 @@
 
 {% block body %}
 
-    <div id="form_wrap">
+    <div class="form_wrap">
 
-    {{ form_start(form, {'attr': {'id': 'form_inscription'}}) }}
+    {{ form_start(form, {'attr': {'class': 'form_main' }}) }}
 
         {{ form_row(form.username, {'label': 'Pseudo'}) }}
         {{ form_row(form.email) }}

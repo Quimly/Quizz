@@ -59,33 +59,33 @@ div#nav-container a{
 
 /** REGISTER FORM **/
 
-#form_wrap {
+.form_wrap {
 	width: 84.5%;
 }
 
-#form_inscription {
+.form_main {
 	width: 380px;
 	margin: 40px auto 40px auto;
 }
 
-#form_inscription div {
+.form_main div {
 	display: grid;
 	grid-template-areas: "l i";
 	grid-template-columns: 110px 170px;
 }
 
-#form_inscription label {
+.form_main label {
 	grid-area: l;
 	text-align: right;
 	margin: 0 10px 10px 0;
 }
 
-#form_inscription input {
+.form_main input {
 	grid-area: i;
 	margin-bottom: 7px;
 }
 
-#form_inscription button {
+.form_main button {
 	margin: 5px 0 0 110px;
 	width: 170px;
 }
