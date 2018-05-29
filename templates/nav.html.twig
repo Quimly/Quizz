@@ -1,10 +1,11 @@
 <nav>
     <ul>
     	<li><a href="{{ path('home')}}">Accueil</a></li>
-        <li><a href="{{ path('registration')}}">Inscription</a></li>
+
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     		<li><a href="{{ path('logout')}}">Se déconnecter</a></li>
     	{% else %}
+            <li><a href="{{ path('registration')}}">Inscription</a></li>
     		<li><a href="{{ path('login')}}">Se connecter</a></li>
         {% endif %}
     </ul>
