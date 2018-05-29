@@ -1,3 +1,6 @@
 {% block punchline %}
 	<h1>Quimly</h1>
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <p>Bienvenue {{ app.user.username }} !</p>
+    {% endif %}
 {% endblock %}
