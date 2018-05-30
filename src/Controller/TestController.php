@@ -16,11 +16,11 @@ class TestController extends Controller
     {
 	    $user = $this->getDoctrine()->getRepository(User::class);
 
-	    $users = $user->findAll();
+	    $quizzes = $user->find(20)->getQuizz();
+
 
 	    return $this->render('test/index.html.twig', [
-	    	'controller_name' => 'TestController', 'users' => $users
+		    'controller_name' => 'TestController', 'quizzes' => $quizzes
 	    ]);
-
     }
 }
