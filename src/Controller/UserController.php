@@ -38,4 +38,12 @@ class UserController extends Controller
 		);
 	}
 
+	/**
+	 * @Route("/update", name="update")
+	 */
+	public function update()
+	{
+		//TODO: implement update function (update user data)
+	}
+
 }
