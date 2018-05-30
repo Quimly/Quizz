@@ -59,7 +59,7 @@ class User implements UserInterface, \Serializable
 	private $roles;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="App\Entity\Quizz", mappedBy="user", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="user")
 	 */
 	private $quizz;
 
@@ -156,22 +156,37 @@ class User implements UserInterface, \Serializable
 		// TODO: Implement eraseCredentials() method.
 	}
 
-	public function getQuizz()
+	/**
+	 * @return Collection|Quizz[]
+	 */
+	public function getQuizz(): Collection
 	{
 		return $this->quizz;
 	}
 
-	public function setQuizz(?Quizz $quizz): self
+	public function addQuizz(Quizz $quizz): self
 	{
-		$this->quizz = $quizz;
-
-		// set (or unset) the owning side of the relation if necessary
-		$newUser = $quizz === null ? null : $this;
-
-		if ($newUser !== $quizz->getUser()) {
-			$quizz->setUser($newUser);
+		if (!$this->quizz->contains($quizz)) {
+			$this->quizz[] = $quizz;
+			$quizz->setUser($this);
 		}
+
 		return $this;
 	}
+
+	public function removeQuizz(Quizz $quizz): self
+	{
+		if ($this->quizz->contains($quizz)) {
+			$this->quizz->removeElement($quizz);
+			// set the owning side to null (unless already changed)
+			if ($quizz->getUser() === $this) {
+				$quizz->setUser(null);
+			}
+		}
+
+		return $this;
+	}
+
+
 
 }

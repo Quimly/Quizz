@@ -27,9 +27,10 @@ class Quizz
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="quizz", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="quizz")
      */
     private $user;
+
 
 
     public function getId()
