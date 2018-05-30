@@ -14,13 +14,16 @@ class TestController extends Controller
      */
     public function index()
     {
-	    $user = $this->getDoctrine()->getRepository(User::class);
+	    $users = $this->getDoctrine()->getRepository(User::class);
 
-	    $quizzes = $user->find(20)->getQuizz();
+		$user = $users->find(20);
+
+	    $quizzes = $user->getQuizz();
 
 
 	    return $this->render('test/index.html.twig', [
-		    'controller_name' => 'TestController', 'quizzes' => $quizzes
+		    'controller_name' => 'TestController', 'quizzes' => $quizzes,
+		    'user' => $user
 	    ]);
     }
 }

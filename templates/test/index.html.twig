@@ -17,8 +17,12 @@
         <li>Your template at <code><a href="{{ 'templates/test/index.html.twig'|file_link(0) }}">templates/test/index.html.twig</a></code></li>
     </ul>
 </div>
-    {% for user in users %}
-        <li>{{ user.username }} - id : {{ user.id }}</li>
+
+    Les quizz de {{ user.username }} :
+
+    {% for quizz in quizzes %}
+        <li>{{ quizz.title }}</li>
     {% endfor %}
+
 <img src="{{ asset('img/puerto.jpg') }}">
 {% endblock %}
