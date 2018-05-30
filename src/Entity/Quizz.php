@@ -27,10 +27,10 @@ class Quizz
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="quizz")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="quizz", cascade={"persist", "remove"})
      */
     private $user;
+
 
     public function getId()
     {
@@ -61,15 +61,17 @@ class Quizz
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
+
+
 }

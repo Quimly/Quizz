@@ -16,19 +16,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	/**
+	 * @ORM\Id()
+	 * @ORM\GeneratedValue()
+	 * @ORM\Column(type="integer")
+	 */
+	private $id;
 
-    /**
-     * @ORM\Column(type="string", length=20, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Regex("/^\w+$/")
-     */
-    private $username;
+	/**
+	 * @ORM\Column(type="string", length=20, unique=true)
+	 * @Assert\NotBlank()
+	 * @Assert\Regex("/^\w+$/")
+	 */
+	private $username;
 
 	/**
 	 * @Assert\NotBlank()
@@ -36,17 +36,17 @@ class User implements UserInterface, \Serializable
 	 */
 	private $plainPassword;
 
-    /**
-     * @ORM\Column(type="string", length=120)
-     */
-    private $password;
+	/**
+	 * @ORM\Column(type="string", length=120)
+	 */
+	private $password;
 
-    /**
-     * @ORM\Column(type="string", length=120, unique=true)
-     * @Assert\NotBlank())
-     * @Assert\Email()
-     */
-    private $email;
+	/**
+	 * @ORM\Column(type="string", length=120, unique=true)
+	 * @Assert\NotBlank())
+	 * @Assert\Email()
+	 */
+	private $email;
 
 	/**
 	 * @ORM\Column(name="is_active", type="boolean")
@@ -58,10 +58,12 @@ class User implements UserInterface, \Serializable
 	 */
 	private $roles;
 
-   /**
-   * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="User")
-   */
-    private $quizz;
+	/**
+	 * @ORM\OneToOne(targetEntity="App\Entity\Quizz", mappedBy="user", cascade={"persist", "remove"})
+	 */
+	private $quizz;
+
+
 
 	public function __construct()
 	{
@@ -70,22 +72,22 @@ class User implements UserInterface, \Serializable
 		$this->quizz = new ArrayCollection();
 	}
 
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
+	public function getUsername()
+	{
+		return $this->username;
+	}
 
-    public function setUsername(string $username)
-    {
-        $this->username = $username;
+	public function setUsername(string $username)
+	{
+		$this->username = $username;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	public function getPlainPassword()
 	{
@@ -97,29 +99,29 @@ class User implements UserInterface, \Serializable
 		$this->plainPassword = $plainPassword;
 	}
 
-    public function getPassword()
-    {
-        return $this->password;
-    }
+	public function getPassword()
+	{
+		return $this->password;
+	}
 
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
+	public function setPassword(string $password)
+	{
+		$this->password = $password;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	public function getEmail()
+	{
+		return $this->email;
+	}
 
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
+	public function setEmail(string $email)
+	{
+		$this->email = $email;
 
-        return $this;
-    }
+		return $this;
+	}
 
 	public function serialize()
 	{
@@ -154,33 +156,22 @@ class User implements UserInterface, \Serializable
 		// TODO: Implement eraseCredentials() method.
 	}
 
-	 /**
-	  * @return Collection|Quizz[]
-	  */
-	 public function getQuizz(): Collection
-	 {
-	     return $this->quizz;
-	 }
+	public function getQuizz()
+	{
+		return $this->quizz;
+	}
 
-	 public function addQuizz(Quizz $quizz): self
-	 {
-	     if (!$this->quizz->contains($quizz)) {
-	         $this->quizz[] = $quizz;
-	         $quizz->setUser($this);
-	     }
-	     return $this;
-	 }
+	public function setQuizz(?Quizz $quizz): self
+	{
+		$this->quizz = $quizz;
 
-	 public function removeQuizz(Quizz $quizz): self
-	 {
-	     if ($this->quizz->contains($quizz)) {
-	         $this->quizz->removeElement($quizz);
-	         // set the owning side to null (unless already changed)
-	         if ($quizz->getUser() === $this) {
-	             $quizz->setUser(null);
-	         }
-	     }
-	     return $this;
-	 }
+		// set (or unset) the owning side of the relation if necessary
+		$newUser = $quizz === null ? null : $this;
+
+		if ($newUser !== $quizz->getUser()) {
+			$quizz->setUser($newUser);
+		}
+		return $this;
+	}
 
 }
