@@ -62,11 +62,16 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="user")
 	 */
 	private $quizz;
- private $__EXTRA__LINE;
- /**
-  * @ORM\Column(type="datetime")
-  */
- private $created;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $created;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $updated;
 
 
 
@@ -161,9 +166,6 @@ class User implements UserInterface, \Serializable
 		// TODO: Implement eraseCredentials() method.
 	}
 
-	/**
-	 * @return Collection|Quizz[]
-	 */
 	public function getQuizz(): Collection
 	{
 		return $this->quizz;
@@ -188,38 +190,32 @@ class User implements UserInterface, \Serializable
 				$quizz->setUser(null);
 			}
 		}
+		return $this;
+	}
+
+	public function getCreated(): ?\DateTimeInterface
+	{
+		return $this->created;
+	}
+
+	public function setCreated(\DateTimeInterface $created): self
+	{
+		$this->created = $created;
 
 		return $this;
 	}
- private $__EXTRA__LINE;
- public function getCreated(): ?\DateTimeInterface
- {
-     return $this->created;
- }
- private $__EXTRA__LINE;
- private $__EXTRA__LINE;
- /**
-  * @ORM\Column(type="datetime", nullable=true)
-  */
- private $updated;
- public function setCreated(\DateTimeInterface $created): self
- {
-     $this->created = $created;
-     $__EXTRA__LINE;
-     return $this;
- }
- private $__EXTRA__LINE;
- public function getUpdated(): ?\DateTimeInterface
- {
-     return $this->updated;
- }
- private $__EXTRA__LINE;
- public function setUpdated(?\DateTimeInterface $updated): self
- {
-     $this->updated = $updated;
-     $__EXTRA__LINE;
-     return $this;
- }
+
+	public function getUpdated(): ?\DateTimeInterface
+	{
+		return $this->updated;
+	}
+
+	public function setUpdated(?\DateTimeInterface $updated): self
+	{
+		$this->updated = $updated;
+
+		return $this;
+	}
 
 
 
