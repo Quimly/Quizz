@@ -62,6 +62,11 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="user")
 	 */
 	private $quizz;
+ private $__EXTRA__LINE;
+ /**
+  * @ORM\Column(type="datetime")
+  */
+ private $created;
 
 
 
@@ -186,6 +191,35 @@ class User implements UserInterface, \Serializable
 
 		return $this;
 	}
+ private $__EXTRA__LINE;
+ public function getCreated(): ?\DateTimeInterface
+ {
+     return $this->created;
+ }
+ private $__EXTRA__LINE;
+ private $__EXTRA__LINE;
+ /**
+  * @ORM\Column(type="datetime", nullable=true)
+  */
+ private $updated;
+ public function setCreated(\DateTimeInterface $created): self
+ {
+     $this->created = $created;
+     $__EXTRA__LINE;
+     return $this;
+ }
+ private $__EXTRA__LINE;
+ public function getUpdated(): ?\DateTimeInterface
+ {
+     return $this->updated;
+ }
+ private $__EXTRA__LINE;
+ public function setUpdated(?\DateTimeInterface $updated): self
+ {
+     $this->updated = $updated;
+     $__EXTRA__LINE;
+     return $this;
+ }
 
 
 

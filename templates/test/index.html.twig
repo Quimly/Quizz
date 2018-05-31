@@ -20,7 +20,7 @@
 
     Les quizz de {{ user.username }} :
 
-    {% for quizz in quizzes %}
+    {% for quizz in user.quizz %}
         <li>{{ quizz.title }}</li>
     {% endfor %}
 

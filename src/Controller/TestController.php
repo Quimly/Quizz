@@ -18,12 +18,8 @@ class TestController extends Controller
 
 		$user = $users->find(20);
 
-	    $quizzes = $user->getQuizz();
-
-
 	    return $this->render('test/index.html.twig', [
-		    'controller_name' => 'TestController', 'quizzes' => $quizzes,
-		    'user' => $user
+		    'controller_name' => 'TestController', 'user' => $user
 	    ]);
     }
 }
