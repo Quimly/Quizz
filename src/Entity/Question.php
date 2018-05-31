@@ -36,6 +36,13 @@ class Question
      */
     private $updated;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     */
+    private $image;
+
+
+
     public function getId()
     {
         return $this->id;
@@ -85,6 +92,18 @@ class Question
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

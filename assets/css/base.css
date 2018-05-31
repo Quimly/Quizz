@@ -1,8 +1,22 @@
+html {
+	vertical-align: top;
+}
+
 /** BODY **/
 body {
 	margin:0;
 	box-sizing: border-box;
 	font-family: monospace;
+}
+
+.quizz_img {
+	width: 200px;
+	height: auto;
+}
+
+.user_img {
+	width: 50px;
+	height: auto;
 }
 
 /* Mise en place du systeme de grille */
