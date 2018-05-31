@@ -1,6 +1,12 @@
 {% block punchline %}
 	<h1>Quimly</h1>
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    	<p>Bienvenue {{ app.user.username }} !</p>
+    	<p>Bienvenue {{ app.user.username }} !
+
+            {% if app.user.image is not null %}
+				<img src="{{ asset('img/user/' ~ app.user.image.url) }}" class="user_img">
+            {% endif %}
+
+		</p>
     {% endif %}
 {% endblock %}

@@ -21,8 +21,16 @@
     Les quizz de {{ user.username }} :
 
     {% for quizz in user.quizz %}
-        <li>{{ quizz.title }}</li>
+
+        <li>{{ quizz.title }}
+
+            {% if quizz.image is not null %}
+                <img src="{{ asset('img/quizz/' ~ quizz.image.url) }}" class="quizz_img">
+            {% endif %}
+
+        </li>
+
     {% endfor %}
 
-<img src="{{ asset('img/puerto.jpg') }}">
+{#<img src="{{ asset('img/puerto.jpg') }}">#}
 {% endblock %}
