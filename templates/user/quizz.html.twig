@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for quizz in user.quizz %}
+        <li>{{ quizz.title }}
+
+            {% if quizz.description is not null %}
+                <p>{{ quizz.description }}</p>
+            {% endif %}
+        </li>
+        <hr />
+
+    {% endfor %}
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizzRepository")
@@ -18,11 +20,14 @@ class Quizz
 
     /**
      * @ORM\Column(type="string", length=190)
+     * @Assert\NotBlank()
+	 * @Assert\Regex("/^[\w !?.-]+$/")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+	 * @Assert\Regex("/^[\w !?.-]+$/")
      */
     private $description;
 

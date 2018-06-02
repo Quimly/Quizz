@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crée ton Quizz!{% endblock %}
+
+{% block body %}
+
+	<div class="form_wrap">
+
+    {{ form_start(form, {'attr': {'class': 'form_main' }}) }}
+
+        {{ form_row(form.title, {'label': 'Intitulé'}) }}
+        {{ form_row(form.description, {'label': 'Description'}) }}
+
+        <button type="submit">Créer!</button>
+
+    {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

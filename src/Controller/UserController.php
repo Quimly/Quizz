@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends Controller
 {
 	/**
-	 * @Route("/register", name="registration")
+	 * @Route("/register/", name="registration")
 	 */
 	public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
 	{
@@ -44,6 +44,19 @@ class UserController extends Controller
 	public function update()
 	{
 		//TODO: implement update function (update user data)
+	}
+	
+	/**
+	 * @Route("/profile/myquizz", name="userQuizz")
+	 */
+	public function getUserQuizz()
+	{
+	    $user = $this->getUser();
+	    
+	    return $this->render('user/quizz.html.twig', [
+	        'controller_name' => 'TestController',
+	        'user' => $user
+	    ]);
 	}
 
 }

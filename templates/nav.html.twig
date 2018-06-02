@@ -4,11 +4,12 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     		<li><a href="{{ path('logout')}}">Se déconnecter</a></li>
+    		<li><a href="{{ path('userQuizz')}}">Mes quizz</a></li>
     	{% else %}
             <li><a href="{{ path('registration')}}">Inscription</a></li>
     		<li><a href="{{ path('login')}}">Connexion</a></li>
         {% endif %}
-
+		<li><a href="{{ path('createQuizz')}}">Créer un quizz</a></li>
         <li><a href="{{ path('test')}}">Test</a></li>
     </ul>
 </nav>
