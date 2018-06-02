@@ -21,13 +21,23 @@ class Quizz
     /**
      * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
-	 * @Assert\Regex("/^[\w !?.'-]+$/")
+	 * @Assert\Regex("/^[\w !?.'-]+$/", message="Le titre comporte uniquement des caractères alphanumériques, ainsi que les symboles suivants : !?'-")
+	 * @Assert\Length(
+     *      min = 1,
+     *      max = 190,
+     *      minMessage = "L'intitulé doit faire au moins  {{ limit }} caractères",
+     *      maxMessage = "L'intitulé ne doit pas dépasser {{ limit }} caractères"
+     *)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-	 * @Assert\Regex("/^[\w !?.'-]+$/")
+	 * @Assert\Regex("/^[\w !?.'-]+$/", message="La description comporte uniquement des caractères alphanumériques, ainsi que les symboles suivants : !?'-")
+	 * @Assert\Length(
+     *      max = 500,
+     *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
+     *)
      */
     private $description;
 

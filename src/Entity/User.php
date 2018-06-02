@@ -26,13 +26,25 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @ORM\Column(type="string", length=20, unique=true)
 	 * @Assert\NotBlank()
-	 * @Assert\Regex("/^\w+$/")
+	 * @Assert\Regex("/^\w+$/", message="Seuls les caractères alphanumériques sont autorisés")
+	 * @Assert\Length(
+     *      min = 1,
+     *      max = 20,
+     *      minMessage = "Le pseudo doit faire au moins  {{ limit }} caractère",
+     *      maxMessage = "Le pseudo ne doit pas dépasser {{ limit }} caracteres"
+     *)
 	 */
 	private $username;
 
 	/**
 	 * @Assert\NotBlank()
 	 * @Assert\Length(max=4096)
+	 *@Assert\Length(
+     *      min = 5,
+     *      max = 60,
+     *      minMessage = "Le mot de passe doit faire au moins  {{ limit }} caractères",
+     *      maxMessage = "Le mot de passe ne doit pas dépasser {{ limit }} caracteres"
+     *)
 	 */
 	private $plainPassword;
 
@@ -44,7 +56,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @ORM\Column(type="string", length=120, unique=true)
 	 * @Assert\NotBlank())
-	 * @Assert\Email()
+	 * @Assert\Email(message="cet email n'est pas valide")
 	 */
 	private $email;
 
