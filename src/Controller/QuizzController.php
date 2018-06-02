@@ -37,4 +37,29 @@ class QuizzController extends Controller
             array('form' => $form->createView())
             );
     }
+    
+    /**
+     * @Route("profile/quizz/{id}", name="editQuizz", requirements={"page"="\d+"})
+     */
+    public function editQuizz($id)
+    {
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $quizz = $entityManager->getRepository(Quizz::class)->find($id);
+        
+        if (!$quizz) {
+            throw $this->createNotFoundException(
+                'No quizz found for id '.$id
+                );
+        } else if ($quizz->getUser() != $this->getUser()){
+            throw $this->createNotFoundException(
+                'This user doesn\'t own this quizz'
+                );
+        }
+        
+        return $this->render(
+            'quizz/edit.html.twig',[
+                'quizz' => $quizz       
+            ]);
+    }
 }

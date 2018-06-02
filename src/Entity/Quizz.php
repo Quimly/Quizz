@@ -21,13 +21,13 @@ class Quizz
     /**
      * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
-	 * @Assert\Regex("/^[\w !?.-]+$/")
+	 * @Assert\Regex("/^[\w !?.'-]+$/")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-	 * @Assert\Regex("/^[\w !?.-]+$/")
+	 * @Assert\Regex("/^[\w !?.'-]+$/")
      */
     private $description;
 
@@ -51,7 +51,15 @@ class Quizz
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+    
 
+    public function __construct(){
+        $this->setPublished(false);
+    }
 
     public function getId()
     {
@@ -126,6 +134,18 @@ class Quizz
     public function setImage(?Image $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
 
         return $this;
     }

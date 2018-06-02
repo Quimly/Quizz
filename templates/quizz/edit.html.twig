@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>{{ quizz.title }}</h2>
+    <p>Status:
+        {% if quizz.published %} 
+    		publié
+    	{% else %}
+    		Non publié
+    	{% endif %}
+    </p>
+    <p>Description:
+        {% if quizz.description is not null %}
+            {{ quizz.description }}
+        {% else %}
+        	Aucune description
+        {% endif %}
+    </p>
+{% endblock %}

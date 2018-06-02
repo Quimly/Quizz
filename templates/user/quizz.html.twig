@@ -3,10 +3,18 @@
 {% block body %}
 
     {% for quizz in user.quizz %}
-        <li>{{ quizz.title }}
+        <a href="{{ path('editQuizz', { 'id' : quizz.id })}}">{{ quizz.title }}</a>
+        
+        	{% if quizz.published %} 
+        		<span>(publié)</span>
+        	{% else %}
+        		<span>(non publié)</span>
+        	{% endif %}
 
             {% if quizz.description is not null %}
                 <p>{{ quizz.description }}</p>
+            {% else %}
+        		<p>Aucune description</p>
             {% endif %}
         </li>
         <hr />

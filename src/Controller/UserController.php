@@ -24,6 +24,9 @@ class UserController extends Controller
 		{
 			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($password);
+			
+			$user->setCreated(new \DateTime());
+			$user->setUpdated(new \DateTime());
 
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($user);
