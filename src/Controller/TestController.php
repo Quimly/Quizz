@@ -10,7 +10,7 @@ use App\Entity\User;
 class TestController extends Controller
 {
     /**
-     * @Route("/test", name="test")
+     * @Route("/test/", name="test")
      */
     public function index()
     {
@@ -22,5 +22,26 @@ class TestController extends Controller
 		    'controller_name' => 'TestController', 'user' => $user
 	    ]);
     }
-
+    
+    /**
+     * @Route("/profile/roleadmin/", name="setadmin")
+     */
+    public function addAdmin()
+    {
+        $user = $this->getUser();
+        
+        $user->setRole(array('ROLE_ADMIN'));
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $entityManager->persist($user);
+        
+        $entityManager->flush();
+        
+        return $this->render('test/echo.html.twig', [
+           
+        ]);
+    }
+    
 }
+
