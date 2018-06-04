@@ -33,7 +33,7 @@ class Image
     private $updated;
     
     /**
-     *  @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
+     * @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
      */
     private $file;
 

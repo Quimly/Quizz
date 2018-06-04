@@ -6,6 +6,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\ImageQuizzUploader;
+use App\Entity\Constant;
 use App\Form\QuizzType;
 use App\Entity\Quizz;
 use App\Entity\Image;
