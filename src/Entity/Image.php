@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -18,6 +19,7 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=190)
+     * @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
      */
     private $url;
 
@@ -25,11 +27,6 @@ class Image
      * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $alt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -61,18 +58,6 @@ class Image
     public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface $created): self
-    {
-        $this->created = $created;
 
         return $this;
     }
