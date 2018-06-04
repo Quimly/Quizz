@@ -81,9 +81,12 @@ class QuizzController extends Controller
                 );
         }
         
+        $constant = new Constant();
+        
         return $this->render(
             'quizz/edit.html.twig',[
-                'quizz' => $quizz       
+                'quizz' => $quizz,
+                'constant' => $constant
             ]);
     }
     
@@ -105,9 +108,11 @@ class QuizzController extends Controller
                 'This user doesn\'t own this quizz'
                 );
         }
-        
-        $fileSystem = new Filesystem();
-        $fileSystem->remove(Constant::PATH_IMAGE_QUIZZ . $quizz->getImage()->getUrl());
+        if($quizz->getImage() != null) {
+            
+            $fileSystem = new Filesystem();
+            $fileSystem->remove(Constant::PATH_IMAGE_QUIZZ . $quizz->getImage()->getUrl());
+        }
         
         $entityManager->remove($quizz);
         $entityManager->flush();      
