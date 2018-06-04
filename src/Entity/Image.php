@@ -33,7 +33,10 @@ class Image
     private $updated;
     
     /**
-     * @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
+     * @Assert\Image(
+     *  mimeTypes = {"image/png", "image/jpg", "image/jpeg"},
+     *  maxSize = "800k"
+     * )
      */
     private $file;
 

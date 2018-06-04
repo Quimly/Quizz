@@ -58,6 +58,7 @@ class Quizz
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $image;
 
