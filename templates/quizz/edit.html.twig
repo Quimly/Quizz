@@ -17,4 +17,11 @@
         	Aucune description
         {% endif %}
     </p>
+    <p>Image:
+        {% if quizz.image is not null %}
+            <img src="{{ asset('img/quizz/' ~ quizz.image.url) }}" />
+        {% else %}
+        	Aucune image
+        {% endif %}
+    </p>
 {% endblock %}

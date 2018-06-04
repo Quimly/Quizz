@@ -30,4 +30,4 @@ services:
     
     App\Service\ImageQuizzUploader:
         arguments:
-            $quizzDirectory: '%image_quizz_directory%'
+            $targetDirectory: '%image_quizz_directory%'

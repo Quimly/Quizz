@@ -6,11 +6,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageQuizzUploader
 {
-    private $quizzDirectory;
+    private $targetDirectory;
     
-    public function __construct($quizzDirectory)
+    public function __construct($targetDirectory)
     {
-        $this->$quizzDirectory = $quizzDirectory;
+        $this->targetDirectory = $targetDirectory;
     }
     
     public function upload(UploadedFile $file)
@@ -24,6 +24,7 @@ class ImageQuizzUploader
     
     public function getTargetDirectory()
     {
-        return $this->quizzDirectory;
+        var_dump($this->targetDirectory);
+        return $this->targetDirectory;
     }
 }
