@@ -19,7 +19,6 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=190)
-     * @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
      */
     private $url;
 
@@ -32,6 +31,11 @@ class Image
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated;
+    
+    /**
+     *  @Assert\File(mimeTypes={ "image/png" , "image/jpg" })
+     */
+    private $file;
 
     public function getId()
     {
@@ -71,6 +75,18 @@ class Image
     {
         $this->updated = $updated;
 
+        return $this;
+    }
+    
+    public function getFile()
+    {
+        return $this->file;
+    }
+    
+    public function setFile($file): self
+    {
+        $this->file = $file;
+        
         return $this;
     }
 }

@@ -20,6 +20,8 @@
 
         {{ form_row(form.title, {'label': 'Intitulé'}) }}
         {{ form_row(form.description, {'label': 'Description'}) }}
+        {{ form_row(form.image.file, {'label': 'Image'}) }}
+        {{ form_row(form.image.alt, {'label': 'Description de l\'image'}) }}
 
         <button type="submit">Créer!</button>
 
