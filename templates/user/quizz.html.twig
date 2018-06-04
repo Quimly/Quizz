@@ -17,6 +17,8 @@
         		<p>Aucune description</p>
             {% endif %}
         </li>
+        
+        <a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
         <hr />
 
     {% endfor %}

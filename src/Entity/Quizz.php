@@ -57,7 +57,7 @@ class Quizz
     private $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
 

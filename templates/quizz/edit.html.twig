@@ -19,7 +19,7 @@
     </p>
     <p>Image:
         {% if quizz.image is not null %}
-            <img src="{{ asset('img/quizz/' ~ quizz.image.url) }}" />
+            <img src="{{ asset('img/quizz/' ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% else %}
         	Aucune image
         {% endif %}

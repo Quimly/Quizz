@@ -61,7 +61,7 @@ class QuizzController extends Controller
     }
     
     /**
-     * @Route("profile/quizz/{id}", name="editQuizz", requirements={"page"="\d+"})
+     * @Route("profile/quizz/{id}", name="editQuizz", requirements={"id"="\d+"})
      */
     public function editQuizz($id)
     {
@@ -83,5 +83,33 @@ class QuizzController extends Controller
             'quizz/edit.html.twig',[
                 'quizz' => $quizz       
             ]);
+    }
+    
+    /**
+     * @Route("profile/quizz/remove/{id}", name="removeQuizz", requirements={"id"="\d+"})
+     */
+    public function removeQuizz($id)
+    {
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $quizz = $entityManager->getRepository(Quizz::class)->find($id);
+        
+        if (!$quizz) {
+            throw $this->createNotFoundException(
+                'No quizz found for id '.$id
+                );
+        } else if ($quizz->getUser() != $this->getUser()){
+            throw $this->createNotFoundException(
+                'This user doesn\'t own this quizz'
+                );
+        }
+        
+        $entityManager->remove($quizz);
+        $entityManager->flush();
+        
+        //TODO Supprimer le fichier du dossier ICI
+        
+        
+        return $this->redirectToRoute('userQuizz');
     }
 }
