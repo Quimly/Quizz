@@ -6,6 +6,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\ImageQuizzUploader;
+use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\Constant;
 use App\Form\QuizzType;
 use App\Entity\Quizz;
@@ -105,11 +106,11 @@ class QuizzController extends Controller
                 );
         }
         
+        $fileSystem = new Filesystem();
+        $fileSystem->remove(Constant::PATH_IMAGE_QUIZZ . $quizz->getImage()->getUrl());
+        
         $entityManager->remove($quizz);
-        $entityManager->flush();
-        
-        //TODO Supprimer le fichier du dossier ICI
-        
+        $entityManager->flush();      
         
         return $this->redirectToRoute('userQuizz');
     }
