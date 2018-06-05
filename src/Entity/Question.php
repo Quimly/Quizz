@@ -41,6 +41,12 @@ class Question
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quizz", inversedBy="questions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $quizz;
+
 
 
     public function getId()
@@ -104,6 +110,18 @@ class Question
     public function setImage(?Image $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getQuizz(): ?Quizz
+    {
+        return $this->quizz;
+    }
+
+    public function setQuizz(?Quizz $quizz): self
+    {
+        $this->quizz = $quizz;
 
         return $this;
     }

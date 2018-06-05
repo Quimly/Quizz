@@ -63,7 +63,7 @@ class QuizzController extends Controller
     }
     
     /**
-     * @Route("profile/quizz/{id}", name="editQuizz", requirements={"id"="\d+"})
+     * @Route("profile/quizz/{id}/", name="editQuizz", requirements={"id"="\d+"})
      */
     public function editQuizz($id)
     {

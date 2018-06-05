@@ -9,6 +9,8 @@
     	{% else %}
     		Non publié
     	{% endif %}
+    	<a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
+    	<a href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a>
     </p>
     <p>Description:
         {% if quizz.description is not null %}
@@ -24,5 +26,17 @@
         	Aucune image
         {% endif %}
     </p>
-    <a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
+    {% for question in quizz.questions %}
+    
+        	<p>{{ question.entitled }}
+        
+            	{% if question.published %} 
+            		<span>(publié)</span>
+            	{% else %}
+            		<span>(non publié)</span>
+        	{% endif %}
+        	</p>
+        
+     {% endfor %}
+     
 {% endblock %}
