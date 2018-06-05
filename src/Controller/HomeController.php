@@ -5,6 +5,12 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ *
+ * Gestion de la page d'acceuil
+ * @author arnaud et rémy
+ *
+ */
 class HomeController extends Controller
 {
     /**

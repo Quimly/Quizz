@@ -6,34 +6,56 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
+
 use App\Service\ImageUploader;
+
 use App\Form\QuestionType;
+
 use App\Entity\Constant;
 use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\Image;
 
+
+/**
+ *
+ * Gestion des questions
+ * @author arnaud et rémy
+ *
+ */
 class QuestionController extends Controller
 {
 	/**
+	 * Crée une question qui sera lié à un quizz. Possibilité d'associé une image a cette question et de l'uploader sur le serveur
+	 * @param int  $id Id du quizz associé à la question
+	 * @param Request  $request
+	 * @param ImageUploader $imageUploader
 	 * @Route("profile/quizz/{id}/addquestion/", name="addQuestion", requirements={"id"="\d+"})
 	 */
 	public function createQuestion($id, Request $request, ImageUploader $imageUploader)
 	{
+	    //__ Instanciation du manager
 		$entityManager = $this->getDoctrine()->getManager();
+
+		//__ Récupération du quizz par son Id dans la DB
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
+		//__ On verifie que le quizz existe et qu'il appartient bien à l'utilisateur authentifié
         $quizzController = new QuizzController();
         $quizzController->securityCheck($id, $quizz, $this->getUser());
 
+        //__ Initialisation des instances question et image
 		$question = new Question();
 		$image = new Image();
 		$question->setImage($image);
 
+		//__ Création du formulaire
 		$form = $this->createForm(QuestionType::class, $question);
 
+		//__ On hydrate nos entités avec les données du formulaire rempli par l'utilisateur
 		$form->handleRequest($request);
 
+		//__ Si le formulaire est soumis et qu'il est valide on enregistre nos entités en base de données
 		if ($form->isSubmitted() && $form->isValid())
 		{
 			$question->setCreated(new \DateTime());
@@ -42,6 +64,7 @@ class QuestionController extends Controller
 
 			$entityManager = $this->getDoctrine()->getManager();
 
+			//__ Si il y a une image associé à la question, on upload l'image dans le dossier public/img/question, sinon on associe la valeur null à l'attribut image
 			if($question->getImage()->getFile() != null) {
 
 				$file = $question->getImage()->getFile();
@@ -65,10 +88,9 @@ class QuestionController extends Controller
 			$entityManager->flush();
 
 			return $this->redirectToRoute('editQuizz', array('id' => $id));
-
-
 		}
 
+		//__ View
 		return $this->render(
 			'question/index.html.twig',
 			array('form' => $form->createView())
@@ -76,9 +98,12 @@ class QuestionController extends Controller
 	}
 
 	/**
+	 * Supprime une question et l'image associé à cette derniere du dossier img/question si elle existe
+	 * @param int  $id Id du quizz associé à la question
+	 * @param int  $id Id de la question a supprimer
 	 * @Route("profile/quizz/remove/{id}/question/{questionId}/", name="removeQuestion", requirements={"id"="\d+", "questionId"="\d+"})
 	 */
-	public function removeQuestion($id, $questionId, QuizzController $quizzController)
+	public function removeQuestion($id, $questionId)
 	{
 
 		$entityManager = $this->getDoctrine()->getManager();
@@ -99,7 +124,10 @@ class QuestionController extends Controller
 		return $this->redirectToRoute('editQuizz', array('id' => $id));
 	}
 
-	public function securityCheck($id, $quizz, $questionId, $question, $user)
+    /**
+     * Vérifie que le quizz et la question existe, et qu' ils appartiennent bien à l'utilisateur authentifié
+     */
+	public function securityCheck(int $id, $quizz, int $questionId, $question, $user)
 	{
 		$quizzController = new QuizzController();
 	    $quizzController->securityCheck($id, $quizz, $user);
