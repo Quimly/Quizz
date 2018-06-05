@@ -16,7 +16,7 @@
 
 	<div class="form_wrap">
 
-    {{ form_start(form, {'attr': {'class': 'form_main' }}) }}
+    {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
 
         {{ form_row(form.title, {'label': 'Intitulé'}) }}
         {{ form_row(form.description, {'label': 'Description'}) }}

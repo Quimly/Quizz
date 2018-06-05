@@ -22,5 +22,9 @@
         <hr />
 
     {% endfor %}
+    
+    {% if user.quizz is empty %}
+    	<p>Vous n'avez pas de quizz</p>
+    {% endif %}
 
 {% endblock %}
