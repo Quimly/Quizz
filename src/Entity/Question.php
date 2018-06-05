@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -37,7 +38,8 @@ class Question
     private $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $image;
 
@@ -48,8 +50,13 @@ class Question
     private $quizz;
 
 
+    public function __construct()
+    {
+    	$this->published = false;
+    }
 
-    public function getId()
+
+	public function getId()
     {
         return $this->id;
     }

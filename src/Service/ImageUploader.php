@@ -18,9 +18,7 @@ class ImageUploader
         $authorizedFolders = ['quizz', 'user', 'question', 'answer'];
         
         if(!in_array($folder, $authorizedFolders)) {
-            throw $this->createNotFoundException(
-                'Ce dossier n\'image n\'est pas autorisé ou n\'existe pas'
-                );
+            return false;
         }
         
         $fileName = md5(uniqid()).'.'.$file->guessExtension();

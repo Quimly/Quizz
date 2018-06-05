@@ -3,5 +3,23 @@
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-<p>Ajouter une question!
+<p>Ajouter une question!</P>
+
+
+    <div class="form_wrap">
+
+        {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
+
+        {{ form_row(form.entitled, {'label': 'Intitulé'}) }}
+
+        {{ form_row(form.image.file, {'label': 'Image'}) }}
+
+        {{ form_row(form.image.alt, {'label': 'Description de l\'image'}) }}
+
+        <button type="submit">Créer!</button>
+
+        {{ form_end(form) }}
+
+    </div>
+
 {% endblock %}
