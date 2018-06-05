@@ -23,15 +23,8 @@ class QuestionController extends Controller
 		$entityManager = $this->getDoctrine()->getManager();
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-		if (!$quizz) {
-			throw $this->createNotFoundException(
-				'No quizz found for id '.$id
-			);
-		} else if ($quizz->getUser() != $this->getUser()){
-			throw $this->createNotFoundException(
-				'This user doesn\'t own this quizz'
-			);
-		}
+        $quizzController = new QuizzController();
+        $quizzController->securityCheck($id, $quizz, $this->getUser());
 
 		$question = new Question();
 		$image = new Image();
@@ -92,29 +85,7 @@ class QuestionController extends Controller
 		$question = $entityManager->getRepository(Question::class)->find($questionId);
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-//		$this->securityCheck($quizz, $id, $question, $questionId, $quizzController);
-//		TODO: check error on "this->getUser()" from accessed from outside controller
-
-		if (!$quizz) {
-			throw $this->createNotFoundException(
-				'No quizz found for id '.$id
-			);
-		} else if ($quizz->getUser() != $this->getUser()){
-			throw $this->createNotFoundException(
-				'This user doesn\'t own this quizz'
-			);
-		}
-
-		if ($quizz && !$question) {
-			throw $this->createNotFoundException(
-				'No question found for id '.$questionId
-			);
-		} else if ($quizz && ($question->getQuizz() !== $quizz)){
-			throw $this->createNotFoundException(
-				'This question isn\'t part of this quizz'
-			);
-		}
-
+		$this->securityCheck($id, $quizz, $questionId, $question, $this->getUser());
 
 		if($question->getImage() != null) {
 
@@ -128,9 +99,10 @@ class QuestionController extends Controller
 		return $this->redirectToRoute('editQuizz', array('id' => $id));
 	}
 
-	public function securityCheck(Quizz $quizz, $id, Question $question, $questionId, QuizzController $quizzController)
+	public function securityCheck($id, $quizz, $questionId, $question, $user)
 	{
-		$quizzController->securityCheck($id, $quizz);
+		$quizzController = new QuizzController();
+	    $quizzController->securityCheck($id, $quizz, $user);
 
 		if (!$question) {
 			throw $this->createNotFoundException(

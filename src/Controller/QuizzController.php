@@ -77,15 +77,7 @@ class QuizzController extends Controller
 		$entityManager = $this->getDoctrine()->getManager();
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-		if (!$quizz) {
-			throw $this->createNotFoundException(
-				'No quizz found for id '.$id
-			);
-		} else if ($quizz->getUser() != $this->getUser()){
-			throw $this->createNotFoundException(
-				'This user doesn\'t own this quizz'
-			);
-		}
+		$this->securityCheck($id, $quizz, $this->getUser());
 
 		$constant = new Constant();
 
@@ -105,12 +97,21 @@ class QuizzController extends Controller
 		$entityManager = $this->getDoctrine()->getManager();
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-		$this->securityCheck($id, $quizz);
+		$this->securityCheck($id, $quizz, $this->getUser());
+
+		$fileSystem = new Filesystem();
 
 		if($quizz->getImage() != null) {
 
-			$fileSystem = new Filesystem();
 			$fileSystem->remove(Constant::PATH_IMAGE_QUIZZ . $quizz->getImage()->getUrl());
+		}
+
+		foreach ($quizz->getQuestions() as $question) {
+
+		    if($question->getImage() != null) {
+
+		        $fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
+		    }
 		}
 
 		$entityManager->remove($quizz);
@@ -120,13 +121,13 @@ class QuizzController extends Controller
 	}
 
 
-	public function securityCheck($id, Quizz $quizz)
+	public function securityCheck($id, $quizz, $user)
 	{
 		if (!$quizz) {
 			throw $this->createNotFoundException(
 				'No quizz found for id '.$id
 			);
-		} else if ($quizz->getUser() != $this->getUser()){
+		} else if ($quizz->getUser() != $user){
 			throw $this->createNotFoundException(
 				'This user doesn\'t own this quizz'
 			);
