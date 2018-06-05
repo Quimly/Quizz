@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use App\Service\ImageQuizzUploader;
+use App\Service\ImageUploader;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\Constant;
 use App\Form\QuizzType;
@@ -17,7 +17,7 @@ class QuizzController extends Controller
     /**
      * @Route("profile/quizz/", name="createQuizz")
      */
-    public function createQuizz(Request $request, ImageQuizzUploader $imageQuizzUploader)
+    public function createQuizz(Request $request, ImageUploader $imageUploader)
     {
         $quizz = new Quizz();
         $image = new Image();
@@ -38,7 +38,8 @@ class QuizzController extends Controller
             if($quizz->getImage()->getFile() != null) {
 
                 $file = $quizz->getImage()->getFile();
-                $fileName = $imageQuizzUploader->upload($file);
+                $fileName = $imageUploader->upload($file, 'quizz');
+                
                 $quizz->getImage()->setUrl($fileName);
                 $quizz->getImage()->setUpdated(new \DateTime());    
                 $entityManager->persist($image);
