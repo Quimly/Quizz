@@ -105,15 +105,8 @@ class QuizzController extends Controller
 		$entityManager = $this->getDoctrine()->getManager();
 		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-		if (!$quizz) {
-			throw $this->createNotFoundException(
-				'No quizz found for id '.$id
-			);
-		} else if ($quizz->getUser() != $this->getUser()){
-			throw $this->createNotFoundException(
-				'This user doesn\'t own this quizz'
-			);
-		}
+		$this->securityCheck($id, $quizz);
+
 		if($quizz->getImage() != null) {
 
 			$fileSystem = new Filesystem();
@@ -125,4 +118,20 @@ class QuizzController extends Controller
 
 		return $this->redirectToRoute('userQuizz');
 	}
+
+
+	public function securityCheck($id, Quizz $quizz)
+	{
+		if (!$quizz) {
+			throw $this->createNotFoundException(
+				'No quizz found for id '.$id
+			);
+		} else if ($quizz->getUser() != $this->getUser()){
+			throw $this->createNotFoundException(
+				'This user doesn\'t own this quizz'
+			);
+		}
+	}
+
+
 }

@@ -4,39 +4,40 @@
 
     <h2>{{ quizz.title }}</h2>
     <p>Status:
-        {% if quizz.published %} 
-    		publié
-    	{% else %}
-    		Non publié
-    	{% endif %}
-    	<a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
-    	<a href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a>
+        {% if quizz.published %}
+            publié
+        {% else %}
+            Non publié
+        {% endif %}
+        <a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
+        <a href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a>
     </p>
     <p>Description:
         {% if quizz.description is not null %}
             {{ quizz.description }}
         {% else %}
-        	Aucune description
+            Aucune description
         {% endif %}
     </p>
     <p>Image:
         {% if quizz.image is not null %}
             <img src="{{ asset(constant('PATH_IMAGE_QUIZZ', constant) ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% else %}
-        	Aucune image
+            Aucune image
         {% endif %}
     </p>
     {% for question in quizz.questions %}
-    
-        	<p>{{ question.entitled }}
-        
-            	{% if question.published %} 
-            		<span>(publié)</span>
-            	{% else %}
-            		<span>(non publié)</span>
-        	{% endif %}
-        	</p>
-        
-     {% endfor %}
-     
+
+        <p>{{ question.entitled }}
+
+            {% if question.published %}
+                <span>(publié)</span>
+            {% else %}
+                <span>(non publié)</span>
+            {% endif %}
+            <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
+        </p>
+
+    {% endfor %}
+
 {% endblock %}
