@@ -7,6 +7,7 @@ body {
 	margin:0;
 	box-sizing: border-box;
 	font-family: monospace;
+	height: 100vh;
 }
 
 .quizz_img {
@@ -21,8 +22,10 @@ body {
 
 /* Mise en place du systeme de grille */
 div#page-container {
+	height: 100%;
 	display: grid;
-	grid-template-columns: 250px 1fr; /* 250px + "largeur restante" */
+	grid-template-columns: 200px 1fr; /* 250px + "largeur restante" */
+	grid-template-rows : auto 1fr auto;
 	grid-template-areas: "h h"
                          "n c"
                          "f f";
@@ -30,46 +33,88 @@ div#page-container {
 
 div#header-container {
 	grid-area: h;
-	background-color: #EAE5C0;
 }
 
 div#nav-container {
 	grid-area: n;
-	background-color: #D78B9A;
+	text-align: center;
+	padding-top: 80px;
 }
 
 div#content-container {
 	grid-area: c;
-	background-color: #8EB6D9;
+	background-image: url("../../img/background/bgnoise_lg.png");
+	border-top-left-radius: 80px 80px;
+	border-bottom-left-radius: 80px 80px;
+	padding-left: 80px;
 }
 
 div#footer-container {
 	grid-area: f;
-	background-color: #4BA694;
+}
+
+body,
+div#header-container,
+div#nav-container,
+div#footer-container{
+	/* background-color: #5d9fcc; */
+	background-image: url("../../img/background/footer_lodyas.png");
+	
 }
 
 /** HEADER **/
 
 div#header-container h1 {
 	text-align: center;
+	font-size: 50px;
+	color:white;
+	font-family: cursive;
 }
+
+div#user {
+	position: absolute;
+	right: 50px;
+	top: 25px;
+	color: #5d9fcc;
+}
+
+div#user p {
+	padding: 5px 5px;
+	background-color: white;
+	color: black;
+	border-top-left-radius: 20px 20px;
+	border-bottom-left-radius: 20px 20px;
+	border-top-right-radius: 20px 20px;
+	border-bottom-right-radius: 20px 20px;
+	
+}
+
+
 
 /** NAV **/
 
 div#nav-container ul{
+	
 	padding-left: 0;
-	margin: 35px 0 0 0;
 }
 
 div#nav-container li{
-	text-align: center;
 	list-style-type: none;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
+	font-size: 20px
 }
 
 div#nav-container a{
-	color: black;
+	color: white;
 	text-decoration: none;
+	text-align: center;
+}
+
+/** FOOTER **/
+
+div#footer-container{
+	padding-left: 280px;
+	color: white
 }
 
 
