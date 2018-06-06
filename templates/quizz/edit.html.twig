@@ -26,22 +26,55 @@
             Aucune image
         {% endif %}
     </p>
+    
+    <ul>
+    
     {% for question in quizz.questions %}
-
+		<li>
         <p>{{ question.entitled }}
 
-        {% if question.published %}
-            <span>(publié)</span>
-        {% else %}
-            <span>(non publié)</span>
-        {% endif %}
-
-        <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
+            {% if question.published %}
+                <span>(publié)</span>
+            {% else %}
+                <span>(non publié)</span>
+            {% endif %}
+    
+            <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
         </p>
         {% if question.image is not null %}
             <img class="quizz_img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% endif %}
-
+        <ul>
+        {% for answer in question.answers %}
+			<li>
+            <p>{{ answer.entitled }}
+    
+                {% if answer.published %}
+                    <span>(publié)</span>
+                {% else %}
+                    <span>(non publié)</span>
+                {% endif %}
+            </p>
+            
+            {% if answer.correct %}
+                    <p>Cette réponse est VRAI</p>
+            {% else %}
+                    <p>Cette réponse est FAUSSE</p>
+            {% endif %}
+            
+            <p>Explication:
+                {% if answer.explanation is not null %}
+                    {{ answer.explanation }}
+                {% else %}
+                    Aucune explication
+                {% endif %}
+            </p>
+            
+    	</li>	
+        {% endfor %}
+        </ul>
+		</li>
     {% endfor %}
+    </ul>
 
 {% endblock %}
