@@ -47,6 +47,7 @@ class QuizzController extends Controller
 				}
 				$quizz->getImage()->setUrl($fileName);
 				$quizz->getImage()->setUpdated(new \DateTime());
+				$quizz->getImage()->setAlt('Illustration du quizz "' . $quizz->getTitle() . '" ');
 				$entityManager->persist($image);
 
 			} else {

@@ -85,6 +85,7 @@ class QuestionController extends Controller
 				}
 				$question->getImage()->setUrl($fileName);
 				$question->getImage()->setUpdated(new \DateTime());
+				$question->getImage()->setAlt('Illustration de la question "' . $question->getEntitled() . '" ');
 				$entityManager->persist($image);
 
 			} else {
@@ -109,6 +110,7 @@ class QuestionController extends Controller
 			        }
 			        $answer->getImage()->setUrl($fileName);
 			        $answer->getImage()->setUpdated(new \DateTime());
+			        $quizz->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
 			        $entityManager->persist($answer->getImage());
 
 			    } else {
