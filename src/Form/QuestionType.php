@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use App\Form\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
 class QuestionType extends AbstractType
@@ -18,7 +18,10 @@ class QuestionType extends AbstractType
 
 			->add('entitled', TextType::class)
 			->add('image', ImageType::class)
-		;
+			->add('answers', CollectionType::class, array(
+			    'entry_type' => AnswerType::class,
+			    'entry_options' => array('label' => false),
+			));
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

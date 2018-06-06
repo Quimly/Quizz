@@ -15,6 +15,7 @@ use App\Entity\Constant;
 use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\Image;
+use App\Entity\Answer;
 
 
 /**
@@ -48,6 +49,16 @@ class QuestionController extends Controller
 		$question = new Question();
 		$image = new Image();
 		$question->setImage($image);
+
+		//__ On met des réponses à remplir
+		$answer1= new Answer();
+		$question->getAnswers()->add($answer1);
+		$answer2= new Answer();
+		$question->getAnswers()->add($answer2);
+		$answer3= new Answer();
+		$question->getAnswers()->add($answer3);
+		$answer4= new Answer();
+		$question->getAnswers()->add($answer4);
 
 		//__ Création du formulaire
 		$form = $this->createForm(QuestionType::class, $question);
