@@ -112,6 +112,14 @@ class QuizzController extends Controller
 
 		        $fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
 		    }
+
+		    foreach ($question->getAnswers() as $answer) {
+
+		        if($answer->getImage() != null) {
+
+		            $fileSystem->remove(Constant::PATH_IMAGE_ANSWER . $answer->getImage()->getUrl());
+		        }
+		    }
 		}
 
 		$entityManager->remove($quizz);

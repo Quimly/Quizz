@@ -70,6 +70,10 @@
                 {% endif %}
             </p>
             
+            {% if answer.image is not null %}
+            <img  src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answer.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+        {% endif %}
+            
     	</li>	
         {% endfor %}
         </ul>

@@ -16,8 +16,12 @@ class AnswerType extends AbstractType
 	{
 	    $builder
 	    ->add('entitled', TextType::class)
-	    ->add('correct', CheckboxType::class)
-	    ->add('explanation', TextType::class)
+	    ->add('correct', CheckboxType::class, array(
+	        'required' => false
+	    ))
+	    ->add('explanation', TextType::class, array(
+	        'required' => false
+	    ))
 	    ->add('image', ImageType::class)
 	    ;
 

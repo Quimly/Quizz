@@ -47,7 +47,7 @@ class Answer
     private $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     *  @ORM\ManyToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
 
@@ -57,7 +57,10 @@ class Answer
      */
     private $question;
 
-
+    public function __construct()
+    {
+        $this->published = false;
+    }
 
     public function getId()
     {

@@ -50,15 +50,12 @@ class QuestionController extends Controller
 		$image = new Image();
 		$question->setImage($image);
 
-		//__ On met des réponses à remplir
-		$answer1= new Answer();
-		$question->getAnswers()->add($answer1);
-		$answer2= new Answer();
-		$question->getAnswers()->add($answer2);
-		$answer3= new Answer();
-		$question->getAnswers()->add($answer3);
-		$answer4= new Answer();
-		$question->getAnswers()->add($answer4);
+		for($i=0; $i < 4; $i++){
+		    ${'answer_'.$i} = new Answer();
+		    ${'image_'.$i} = new Image();
+		    ${'answer_'.$i}->setImage(${'image_'.$i});
+		    $question->getAnswers()->add(${'answer_'.$i});
+		}
 
 		//__ Création du formulaire
 		$form = $this->createForm(QuestionType::class, $question);
@@ -94,6 +91,34 @@ class QuestionController extends Controller
 				$question->setImage(null);
 			}
 
+			foreach($question->getAnswers() as $answer) {
+
+			    $answer->setCreated(new \DateTime());
+			    $answer->setUpdated(new \DateTime());
+			    $answer->setQuestion($question);
+
+			    if($answer->getImage()->getFile() != null) {
+
+			        $file = $answer->getImage()->getFile();
+			        $fileName = $imageUploader->upload($file, 'answer');
+
+			        if (!$fileName){
+			            throw $this->createNotFoundException(
+			                'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
+			                );
+			        }
+			        $answer->getImage()->setUrl($fileName);
+			        $answer->getImage()->setUpdated(new \DateTime());
+			        $entityManager->persist($answer->getImage());
+
+			    } else {
+			        $answer->setImage(null);
+			    }
+
+			    $entityManager->persist($answer);
+
+			}
+
 			$entityManager->persist($question);
 
 			$entityManager->flush();
@@ -127,6 +152,14 @@ class QuestionController extends Controller
 
 			$fileSystem = new Filesystem();
 			$fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
+		}
+
+		foreach ($question->getAnswers() as $answer) {
+
+		    if($answer->getImage() != null) {
+
+		        $fileSystem->remove(Constant::PATH_IMAGE_ANSWER . $answer->getImage()->getUrl());
+		    }
 		}
 
 		$entityManager->remove($question);
