@@ -17,6 +17,8 @@ Encore
     // uncomment to define the assets of the project
 
     .addEntry('js/app', './assets/js/base.js')
+    .addEntry('js/testAjax', './assets/js/testAjax.js')
+    
     .addStyleEntry('css/app', './assets/css/base.css')
 
     // uncomment if you use Sass/SCSS files
