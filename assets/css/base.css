@@ -7,7 +7,7 @@ body {
 	margin:0;
 	box-sizing: border-box;
 	font-family: monospace;
-	height: 100vh;
+	background-image: url("../background/footer_lodyas.png");
 }
 
 .quizz_img {
@@ -22,7 +22,7 @@ body {
 
 /* Mise en place du systeme de grille */
 div#page-container {
-	height: 100%;
+	min-height: 100vh;
 	display: grid;
 	grid-template-columns: 200px 1fr; /* 250px + "largeur restante" */
 	grid-template-rows : auto 1fr auto;
@@ -43,23 +43,15 @@ div#nav-container {
 
 div#content-container {
 	grid-area: c;
-	background-image: url("../../img/background/bgnoise_lg.png");
+	background-image: url("../background/bgnoise_lg.png");
 	border-top-left-radius: 80px 80px;
 	border-bottom-left-radius: 80px 80px;
 	padding-left: 80px;
+	padding-top: 30px;
 }
 
 div#footer-container {
 	grid-area: f;
-}
-
-body,
-div#header-container,
-div#nav-container,
-div#footer-container{
-	/* background-color: #5d9fcc; */
-	background-image: url("../../img/background/footer_lodyas.png");
-	
 }
 
 /** HEADER **/
