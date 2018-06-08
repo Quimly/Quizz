@@ -17,7 +17,6 @@ use App\Entity\Quizz;
 use App\Entity\Image;
 use App\Entity\Answer;
 
-
 /**
  *
  * Gestion des questions
@@ -49,15 +48,13 @@ class QuestionController extends Controller
 		$question = new Question();
 		$image = new Image();
 		$question->setImage($image);
-//		$answer = new Answer();
-//		$answer->setImage($image);
 
-//		for($i=0; $i < 4; $i++){
-//		    ${'answer_'.$i} = new Answer();
-//		    ${'image_'.$i} = new Image();
-//		    ${'answer_'.$i}->setImage(${'image_'.$i});
-//		    $question->getAnswers()->add(${'answer_'.$i});
-//		}
+		for($i = 0; $i < 2; $i++){
+		    ${'answer_'.$i} = new Answer();
+		    ${'image_'.$i} = new Image();
+		    ${'answer_'.$i}->setImage(${'image_'.$i});
+		    $question->getAnswers()->add(${'answer_'.$i});
+		}
 
 		//__ Création du formulaire
 		$form = $this->createForm(QuestionType::class, $question);
@@ -152,9 +149,10 @@ class QuestionController extends Controller
 
 		$this->securityCheck($id, $quizz, $questionId, $question, $this->getUser());
 
+		$fileSystem = new Filesystem();
+
 		if($question->getImage() != null) {
 
-			$fileSystem = new Filesystem();
 			$fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
 		}
 
@@ -189,6 +187,5 @@ class QuestionController extends Controller
 				'This question isn\'t part of this quizz'
 			);
 		}
-
 	}
 }
