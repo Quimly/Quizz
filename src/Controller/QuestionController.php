@@ -49,13 +49,15 @@ class QuestionController extends Controller
 		$question = new Question();
 		$image = new Image();
 		$question->setImage($image);
+		$answer = new Answer();
+		$answer->setImage($image);
 
-		for($i=0; $i < 4; $i++){
-		    ${'answer_'.$i} = new Answer();
-		    ${'image_'.$i} = new Image();
-		    ${'answer_'.$i}->setImage(${'image_'.$i});
-		    $question->getAnswers()->add(${'answer_'.$i});
-		}
+//		for($i=0; $i < 4; $i++){
+//		    ${'answer_'.$i} = new Answer();
+//		    ${'image_'.$i} = new Image();
+//		    ${'answer_'.$i}->setImage(${'image_'.$i});
+//		    $question->getAnswers()->add(${'answer_'.$i});
+//		}
 
 		//__ Création du formulaire
 		$form = $this->createForm(QuestionType::class, $question);

@@ -18,6 +18,7 @@ Encore
 
     .addEntry('asset/template/base', './assets/js/base.js')
     .addEntry('asset/testAjax', './assets/js/testAjax.js')
+    .addEntry('asset/prototype', './assets/js/prototype.js')
     
     //.addStyleEntry('css/app', './assets/css/base.css')
 
