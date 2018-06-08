@@ -10,13 +10,23 @@ body {
 	background-image: url("../background/footer_lodyas.png");
 }
 
-.quizz_img {
+.quizz-img {
+	max-width: 200px;
+	height: auto;
+}
+
+.user-img {
+	width: 50px;
+	height: auto;
+}
+
+.answer-img {
 	width: 200px;
 	height: auto;
 }
 
-.user_img {
-	width: 50px;
+.question-img {
+	width: 200px;
 	height: auto;
 }
 
@@ -48,6 +58,7 @@ div#content-container {
 	border-bottom-left-radius: 80px 80px;
 	padding-left: 80px;
 	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 div#footer-container {

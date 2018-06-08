@@ -36,8 +36,6 @@ class AnswerType extends AbstractType
 	    ))
 	    ->add('image', ImageType::class)
 	    ;
-
-
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

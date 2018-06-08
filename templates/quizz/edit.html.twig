@@ -21,7 +21,7 @@
     </p>
     <p>Image:
         {% if quizz.image is not null %}
-            <img class="quizz_img" src="{{ asset(constant('PATH_IMAGE_QUIZZ', constant) ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+            <img class="quizz-img" src="{{ asset(constant('PATH_IMAGE_QUIZZ', constant) ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% else %}
             Aucune image
         {% endif %}
@@ -42,7 +42,7 @@
             <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
         </p>
         {% if question.image is not null %}
-            <img class="quizz_img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+            <img class="image-img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% endif %}
         <ul>
         {% for answer in question.answers %}
@@ -71,7 +71,7 @@
             </p>
             
             {% if answer.image is not null %}
-            <img  src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answer.image.url) }}" alt="{% if answer.image.alt is not null %} {{ answer.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+            <img  class ="answer-img" src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answer.image.url) }}" alt="{% if answer.image.alt is not null %} {{ answer.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% endif %}
             
     	</li>	
