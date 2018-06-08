@@ -7,17 +7,6 @@
                 {% if app.user.image is not null %}
     				<img src="{{ asset('img/user/' ~ app.user.image.url) }}" class="user_img">
                 {% endif %}
-                
-                
-                <ul class="navigation">
-                	<li class="toggleSubMenu"><span>{{ app.user.username }}</span>
-                        <ul class="subMenu">
-                        	<li><a href="{{ path('logout')}}" title="Aller à la page 2.1">Se déconnecter</a></li>
-                        	<li><a href="#" title="Aller à la page 2.2">Page 2.2</a></li>
-                        	<li><a href="#" title="Aller à la page 2.3">Page 2.3</a></li>
-                        </ul>
-                    </li>
-                </ul>
     	</div>
     {% endif %}
 {% endblock %}

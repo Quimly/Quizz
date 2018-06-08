@@ -81,8 +81,6 @@ div#user p {
 	
 }
 
-
-
 /** NAV **/
 
 div#nav-container ul{
@@ -102,91 +100,9 @@ div#nav-container a{
 	text-align: center;
 }
 
-.navigation {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  background: #000;
-  color: #fff;
-  width: 200px;
-  font: 1.2em "Trebuchet MS", sans-serif;
-}
-.navigation a, .navigation span {
-  display: block;
-  padding: 4px 10px;
-  color: #fff;
-  text-decoration: none;
-  background: #000 /* url(menu-item.png) left bottom no-repeat */;
-}
-.navigation .toggleSubMenu a, .navigation .toggleSubMenu span {
-  /* background-image: url(menu-item-deroule.png); */
-}
-.navigation .open a, .navigation .open span {
-  /* background-image: url(menu-item-enroule.png); */
-}
-.navigation a:hover, .navigation a:focus, .navigation a:active {
-  text-decoration: underline;
-}
-.navigation .subMenu {
-  font-size: .8em;
-  background: #ccc /* url(subMenu.png) 0 0 repeat-x */;
-  font-size: .9em;
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #666;
-}
-.navigation ul.subMenu a {
-  background: none;
-  padding: 3px 20px;
-}
-
 /** FOOTER **/
 
 div#footer-container{
 	padding-left: 280px;
 	color: white
-}
-
-
-/** REGISTER FORM **/
-
-.form_wrap {
-	width: 84.5%;
-}
-
-.form_main {
-	width: 380px;
-	margin: 40px auto 40px auto;
-}
-
-.form_main div {
-	display: grid;
-	grid-template-areas: "l i";
-	grid-template-columns: 110px 170px;
-	position: relative;
-	width: 700px;
-}
-
-.form_main label {
-	grid-area: l;
-	text-align: right;
-	margin: 0 10px 10px 0;
-}
-
-.form_main input {
-	grid-area: i;
-	margin-bottom: 7px;
-}
-
-.form_main button {
-	margin: 5px 0 0 110px;
-	width: 170px;
-}
-
-/* Messages d'erreurs */
-.form_main div ul {
-	position: absolute;
-	top: -11px;
-	left: 250px;
-	list-style-type: none;
 }

@@ -1,44 +1,48 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('jquery.min.js') }}"></script>
     <script src="{{ asset('build/asset/prototype.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block title %}Hello{% endblock %}
 
 {% block body %}
-<p>Ajouter une question!</P>
+<p>Ajouter une question!</p>
 
 
-    {#<div class="form_wrap">#}
+    {# < div class="form_wrap"> #}
 
         {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
 
-        {#{{ form_row(form.entitled, {'label': 'Intitulé'}) }}#}
+        {# {{ form_row(form.entitled, {'label': 'Intitulé'}) }} #}
 
-        {#{{ form_row(form.image.file, {'label': 'Image'}) }}#}
+        {# {{ form_row(form.image.file, {'label': 'Image'}) }} #}
 
-        {#{{ form_row(form.answer.image.alt, {'label': 'Description de l\'image'}) }}#}
+        {# {{ form_row(form.answer.image.alt, {'label': 'Description de l\'image'}) }} #}
 
-        {#<ul id="formAnswer" class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}">#}
-            {#{% for answer in form.answers %}#}
-                {#<li>{{ form_row(answer.entitled) }}#}
-                	{#{{ form_row(answer.correct) }}#}
-                	{#{{ form_row(answer.explanation) }}#}
-                	{#{{ form_row(answer.image.file) }}#}
-                	{#{{ form_row(answer.image.alt) }}#}
-                {#</li>#}
-            {#{% endfor %}#}
-    	{#</ul>#}
-        {##}
-        {##}
+        {# <ul id="formAnswer" class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}"> #}
+            {# {% for answer in form.answers %} #}
+                {# <li>{{ form_row(answer.entitled) }} #}
+                	{# {{ form_row(answer.correct) }} #}
+                	{# {{ form_row(answer.explanation) }} #}
+                	{# {{ form_row(answer.image.file) }} #}
+                	{# {{ form_row(answer.image.alt) }} #}
+                {# </li> #}
+            {# {% endfor %} #}
+    	{# </ul> #}
 
-        {#<button type="submit">Créer!</button>#}
+        {# <button type="submit">Créer!</button> #}
 
-        {#{{ form_end(form) }}#}
+        {# {{ form_end(form) }} #}
 
-    {#</div>#}
+    {# </div> #}
 
 
     {{ form_start(form) }}
