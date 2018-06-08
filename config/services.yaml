@@ -31,3 +31,4 @@ services:
     App\Service\ImageUploader:
         arguments:
             $targetDirectory: '%image_directory%'
+          

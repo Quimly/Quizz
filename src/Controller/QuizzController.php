@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 use App\Service\ImageUploader;
-use Symfony\Component\Filesystem\Filesystem;
-use App\Entity\Constant;
+use App\Service\SecurityChecker;
+
 use App\Form\QuizzType;
+
+use App\Entity\Constant;
 use App\Entity\Quizz;
 use App\Entity\Image;
 
@@ -72,13 +76,10 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/{id}/", name="editQuizz", requirements={"id"="\d+"})
 	 */
-	public function editQuizz($id)
+	public function editQuizz($id, SecurityChecker $securityChecker)
 	{
 
-		$entityManager = $this->getDoctrine()->getManager();
-		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
-
-		$this->securityCheck($id, $quizz, $this->getUser());
+	    $quizz = $securityChecker->getCheckedQuizz($id);
 
 		$constant = new Constant();
 
@@ -92,15 +93,10 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/remove/{id}", name="removeQuizz", requirements={"id"="\d+"})
 	 */
-	public function removeQuizz($id)
+	public function removeQuizz($id, FileSystem $fileSystem, SecurityChecker $securityChecker)
 	{
 
-		$entityManager = $this->getDoctrine()->getManager();
-		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
-
-		$this->securityCheck($id, $quizz, $this->getUser());
-
-		$fileSystem = new Filesystem();
+	    $quizz = $securityChecker->getCheckedQuizz($id);
 
 		if($quizz->getImage() != null) {
 
@@ -123,23 +119,10 @@ class QuizzController extends Controller
 		    }
 		}
 
+		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);
 		$entityManager->flush();
 
 		return $this->redirectToRoute('userQuizz');
-	}
-
-
-	public function securityCheck($id, $quizz, $user)
-	{
-		if (!$quizz) {
-			throw $this->createNotFoundException(
-				'No quizz found for id '.$id
-			);
-		} else if ($quizz->getUser() != $user){
-			throw $this->createNotFoundException(
-				'This user doesn\'t own this quizz'
-			);
-		}
 	}
 }

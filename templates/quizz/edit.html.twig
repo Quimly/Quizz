@@ -42,7 +42,7 @@
             <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
         </p>
         {% if question.image is not null %}
-            <img class="image-img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+            <img class="question-img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
         {% endif %}
         <ul>
         {% for answer in question.answers %}

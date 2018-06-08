@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 
 use App\Service\ImageUploader;
+use App\Service\SecurityChecker;
 
 use App\Form\QuestionType;
 
@@ -32,17 +33,10 @@ class QuestionController extends Controller
 	 * @param ImageUploader $imageUploader
 	 * @Route("profile/quizz/{id}/addquestion/", name="addQuestion", requirements={"id"="\d+"})
 	 */
-	public function createQuestion($id, Request $request, ImageUploader $imageUploader)
+    public function createQuestion($id, Request $request, ImageUploader $imageUploader, SecurityChecker $securityChecker)
 	{
-	    //__ Instanciation du manager
-		$entityManager = $this->getDoctrine()->getManager();
 
-		//__ Récupération du quizz par son Id dans la DB
-		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
-
-		//__ On verifie que le quizz existe et qu'il appartient bien à l'utilisateur authentifié
-        $quizzController = new QuizzController();
-        $quizzController->securityCheck($id, $quizz, $this->getUser());
+		$quizz = $securityChecker->getCheckedQuizz($id);
 
         //__ Initialisation des instances question et image
 		$question = new Question();
@@ -140,16 +134,11 @@ class QuestionController extends Controller
 	 * @param int  $id Id de la question a supprimer
 	 * @Route("profile/quizz/remove/{id}/question/{questionId}/", name="removeQuestion", requirements={"id"="\d+", "questionId"="\d+"})
 	 */
-	public function removeQuestion($id, $questionId)
+	public function removeQuestion($id, $questionId, FileSystem $fileSystem, SecurityChecker $securityChecker)
 	{
 
-		$entityManager = $this->getDoctrine()->getManager();
-		$question = $entityManager->getRepository(Question::class)->find($questionId);
-		$quizz = $entityManager->getRepository(Quizz::class)->find($id);
 
-		$this->securityCheck($id, $quizz, $questionId, $question, $this->getUser());
-
-		$fileSystem = new Filesystem();
+	    $question = $securityChecker->getCheckedQuestion($id, $questionId);
 
 		if($question->getImage() != null) {
 
@@ -163,29 +152,10 @@ class QuestionController extends Controller
 		        $fileSystem->remove(Constant::PATH_IMAGE_ANSWER . $answer->getImage()->getUrl());
 		    }
 		}
-
+		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($question);
 		$entityManager->flush();
 
 		return $this->redirectToRoute('editQuizz', array('id' => $id));
-	}
-
-    /**
-     * Vérifie que le quizz et la question existe, et qu' ils appartiennent bien à l'utilisateur authentifié
-     */
-	public function securityCheck(int $id, $quizz, int $questionId, $question, $user)
-	{
-		$quizzController = new QuizzController();
-	    $quizzController->securityCheck($id, $quizz, $user);
-
-		if (!$question) {
-			throw $this->createNotFoundException(
-				'No question found for id '.$questionId
-			);
-		} else if ($question->getQuizz() !== $quizz){
-			throw $this->createNotFoundException(
-				'This question isn\'t part of this quizz'
-			);
-		}
 	}
 }
