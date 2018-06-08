@@ -31,11 +31,11 @@ class Image
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated;
-    
+
     /**
      * @Assert\Image(
      *  mimeTypes = {"image/png", "image/jpg", "image/jpeg"},
-     *  maxSize = "800k"
+     *  maxSize = "2000k"
      * )
      */
     private $file;
@@ -80,16 +80,16 @@ class Image
 
         return $this;
     }
-    
+
     public function getFile()
     {
         return $this->file;
     }
-    
+
     public function setFile($file): self
     {
         $this->file = $file;
-        
+
         return $this;
     }
 }

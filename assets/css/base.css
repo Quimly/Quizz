@@ -56,9 +56,7 @@ div#content-container {
 	background-image: url("../background/bgnoise_lg.png");
 	border-top-left-radius: 80px 80px;
 	border-bottom-left-radius: 80px 80px;
-	padding-left: 80px;
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding: 80px 30px;
 }
 
 div#footer-container {

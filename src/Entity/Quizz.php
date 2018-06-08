@@ -23,7 +23,7 @@ class Quizz
     /**
      * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
-	 * @Assert\Regex("/^[\w !?.'-]+$/", message="Le titre comporte uniquement des caractères alphanumériques, ainsi que les symboles suivants : !?'-")
+	 * @Assert\Regex("/^[\w ()!?.',êéàèçû-]+$/", message="Le titre comporte uniquement des caractères alphanumériques")
 	 * @Assert\Length(
      *      min = 1,
      *      max = 190,
@@ -35,9 +35,9 @@ class Quizz
 
     /**
      * @ORM\Column(type="text", nullable=true)
-	 * @Assert\Regex("/^[\w !?.'-]+$/", message="La description comporte uniquement des caractères alphanumériques, ainsi que les symboles suivants : !?'-")
+	 * @Assert\Regex("/^[\w ()!?.',êéàèçû-]+$/", message="La description comporte uniquement des caractères alphanumériques")
 	 * @Assert\Length(
-     *      max = 500,
+     *      max = 1000,
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
      *)
      */
@@ -73,7 +73,7 @@ class Quizz
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="quizz", orphanRemoval=true)
      */
     private $questions;
-    
+
 
     public function __construct(){
         $this->setPublished(false);

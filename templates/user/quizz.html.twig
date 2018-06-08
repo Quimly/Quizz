@@ -1,25 +1,31 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	<link href="{{ asset('build/asset/quizz/userList.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
-
+	
+	<h1>Mes Quizz</h1>
     {% for quizz in user.quizz %}
-        <a href="{{ path('editQuizz', { 'id' : quizz.id })}}">{{ quizz.title }}</a>
-        
-        	{% if quizz.published %} 
-        		<span>(publié)</span>
-        	{% else %}
-        		<span>(non publié)</span>
-        	{% endif %}
-
-            {% if quizz.description is not null %}
-                <p>{{ quizz.description }}</p>
-            {% else %}
-        		<p>Aucune description</p>
-            {% endif %}
-        </li>
-        
-        <a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
-        <hr />
+    	<div class="resume-quizz-wrap">
+            <h2><a class="titre-quizz" href="{{ path('editQuizz', { 'id' : quizz.id })}}">{{ quizz.title }}</a></h2>
+            
+            	{% if quizz.published %} 
+            		<span>(publié)</span>
+            	{% else %}
+            		<span>(non publié)</span>
+            	{% endif %}
+    
+                {% if quizz.description is not null %}
+                    <p class="description-quizz">{{ quizz.description }}</p>
+                {% else %}
+            		<p class="description-quizz">Aucune description</p>
+                {% endif %}
+            </li>
+            
+            <a class="delete" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
+        </div>
 
     {% endfor %}
     
