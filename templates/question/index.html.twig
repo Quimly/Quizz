@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('jquery.min.js') }}"></script>
+    {#<script src="{{ asset('jquery.min.js') }}"></script>#}
     <script src="{{ asset('build/asset/prototype.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -17,47 +17,12 @@
 <p>Ajouter une question!</p>
 
 
-    {# < div class="form_wrap"> #}
-
-        {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
-
-        {# {{ form_row(form.entitled, {'label': 'Intitulé'}) }} #}
-
-        {# {{ form_row(form.image.file, {'label': 'Image'}) }} #}
-
-        {# {{ form_row(form.answer.image.alt, {'label': 'Description de l\'image'}) }} #}
-
-        {# <ul id="formAnswer" class="answers" data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}"> #}
-            {# {% for answer in form.answers %} #}
-                {# <li>{{ form_row(answer.entitled) }} #}
-                	{# {{ form_row(answer.correct) }} #}
-                	{# {{ form_row(answer.explanation) }} #}
-                	{# {{ form_row(answer.image.file) }} #}
-                	{# {{ form_row(answer.image.alt) }} #}
-                {# </li> #}
-            {# {% endfor %} #}
-    	{# </ul> #}
-
-        {# <button type="submit">Créer!</button> #}
-
-        {# {{ form_end(form) }} #}
-
-    {# </div> #}
-
-
-    {{ form_start(form) }}
-    {# ... #}
+    {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
 
     {{ form_row(form.entitled, {'label': 'Intitulé'}) }}
 
     {{ form_row(form.image.file, {'label': 'Image'}) }}
 
-
-    <a href="#"
-       class="add-another-collection-widget"
-       data-list="#answer-fields-list">Ajouter une réponse</a>
-
-    {# store the prototype on the data-prototype attribute #}
     <ul id="answer-fields-list"
         data-prototype="{{ form_widget(form.answers.vars.prototype)|e }}"
         data-widget-tags="{{ '<li></li>'|e }}">
@@ -69,7 +34,9 @@
         {% endfor %}
     </ul>
 
-
+    <a href="#"
+       class="add-another-collection-widget"
+       data-list="#answer-fields-list">Ajouter une réponse</a>
 
     <button type="submit">Créer!</button>
     {{ form_end(form) }}

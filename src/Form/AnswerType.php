@@ -17,8 +17,9 @@ class AnswerType extends AbstractType
 	    $builder
 	    ->add('entitled', TextareaType::class, array(
 		    'attr' => array(
-			    'class' => 'ma-super-classe'
-		    )
+			    'class' => 'ma-super-classe',
+		    ),
+		    'label' => 'Intitulé'
 	    ))
 	    ->add('correct', CheckboxType::class, array(
 	        'required' => false,
@@ -29,8 +30,9 @@ class AnswerType extends AbstractType
 	    ->add('explanation', TextareaType::class, array(
 	        'required' => false,
 	        'attr' => array(
-		        'class' => 'autre-classe'
-	        )
+		        'class' => 'autre-classe',
+	        ),
+	        'label' => 'Explication'
 	    ))
 	    ->add('image', ImageType::class)
 	    ;
