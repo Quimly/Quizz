@@ -49,8 +49,8 @@ class QuestionController extends Controller
 		$question = new Question();
 		$image = new Image();
 		$question->setImage($image);
-		$answer = new Answer();
-		$answer->setImage($image);
+//		$answer = new Answer();
+//		$answer->setImage($image);
 
 //		for($i=0; $i < 4; $i++){
 //		    ${'answer_'.$i} = new Answer();
