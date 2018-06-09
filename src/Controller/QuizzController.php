@@ -75,8 +75,15 @@ class QuizzController extends Controller
 	 */
 	public function editQuizz($id, SecurityChecker $securityChecker)
 	{
+	    try{
 
-	    $quizz = $securityChecker->getCheckedQuizz($id);
+	        $quizz = $securityChecker->getCheckedQuizz($id);
+
+	    } catch(\Exception $e){
+
+	        return $this->redirectToRoute('userQuizz');
+	    }
+
 
 		$constant = new Constant();
 
@@ -93,7 +100,14 @@ class QuizzController extends Controller
 	public function removeQuizz($id, ImageService $imageService, SecurityChecker $securityChecker)
 	{
 
-	    $quizz = $securityChecker->getCheckedQuizz($id);
+	    try{
+
+	        $quizz = $securityChecker->getCheckedQuizz($id);
+
+	    } catch(\Exception $e) {
+
+	        return $this->redirectToRoute('userQuizz');
+	    }
 
 		$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUIZZ'), $quizz->getImage());
 

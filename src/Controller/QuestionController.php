@@ -30,8 +30,14 @@ class QuestionController extends Controller
 	 */
     public function createQuestion($id, Request $request, ImageService $imageService, SecurityChecker $securityChecker)
 	{
+        try {
 
-		$quizz = $securityChecker->getCheckedQuizz($id);
+		  $quizz = $securityChecker->getCheckedQuizz($id);
+
+        } catch (\Exception $e) {
+
+            return $this->redirectToRoute('userQuizz');
+        }
 
         //__ Initialisation des instances question et image
 		$question = new Question();
@@ -132,7 +138,15 @@ class QuestionController extends Controller
 	public function removeQuestion($id, $questionId, ImageService $imageService, SecurityChecker $securityChecker)
 	{
 
-	    $question = $securityChecker->getCheckedQuestion($id, $questionId);
+	    try {
+
+	        $question = $securityChecker->getCheckedQuestion($id, $questionId);
+
+	    } catch(\Exception $e) {
+
+	        return $this->redirectToRoute('editQuizz', array('id' => $id));
+	    }
+
 
 		$imageService ->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUESTION'), $question->getImage());
 
