@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,7 +109,17 @@ class QuizzController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
-		$imageService->removeImages($quizz);
+		$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUIZZ'), $quizz->getImage());
+
+		foreach ($quizz->getQuestions() as $question){
+
+			$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUESTION'), $question->getImage());
+
+			foreach ($question->getAnswers() as $answer){
+
+				$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_ANSWER'), $answer->getImage());
+			}
+		}
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);
