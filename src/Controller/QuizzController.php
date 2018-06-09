@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,12 +90,22 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/remove/{id}", name="removeQuizz", requirements={"id"="\d+"})
 	 */
-	public function removeQuizz($id, imageService $imageService, SecurityChecker $securityChecker)
+	public function removeQuizz($id, ImageService $imageService, SecurityChecker $securityChecker)
 	{
 
 	    $quizz = $securityChecker->getCheckedQuizz($id);
 
-		$imageService->removeImages($quizz);
+		$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUIZZ'), $quizz->getImage());
+
+		foreach ($quizz->getQuestions() as $question){
+
+			$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUESTION'), $question->getImage());
+
+			foreach ($question->getAnswers() as $answer){
+
+				$imageService->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_ANSWER'), $answer->getImage());
+			}
+		}
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);

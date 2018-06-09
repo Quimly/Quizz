@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\ImageService;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -133,7 +134,13 @@ class QuestionController extends Controller
 
 	    $question = $securityChecker->getCheckedQuestion($id, $questionId);
 
-		$imageService->removeImages($question);
+		$imageService ->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_QUESTION'), $question->getImage());
+
+		foreach ($question->getAnswers() as $answer){
+
+			$imageService ->removeImage(\constant('App\Entity\Constant::PATH_IMAGE_ANSWER'), $answer->getImage());
+		}
+
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($question);
