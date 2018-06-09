@@ -27,11 +27,18 @@
 	color:#343434;
 	margin: 20px 30px;
 	border-radius: 20px 20px;
-	background-image: url("../background/bgnoise_lg.png");
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+.false-answer {
+	background-color: #e09696;
+}
+
+.true-answer {
+	background-color: #a7e096;
 }
 
 .quizz-img {
