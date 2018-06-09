@@ -18,6 +18,7 @@ $(function() {
 		$(this).siblings(".hide-details-question").show();
 		$(this).siblings(".show-details-all-answers").show();
 		$(this).siblings(".hide-details-all-answers").trigger('click');
+		$(".hide-details-all-questions").show();
 	});
 	
 	$(".hide-details-question").on('click', function(e){
@@ -26,6 +27,7 @@ $(function() {
 		$(this).siblings(".show-details-question").show();
 		$(this).siblings(".show-details-all-answers").hide();
 		$(this).siblings(".hide-details-all-answers").hide();
+		$(".show-details-all-questions").show();
 	});
 	
 	$(".show-details-all-questions").on('click', function(e){

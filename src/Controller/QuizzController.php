@@ -74,8 +74,15 @@ class QuizzController extends Controller
 	 */
 	public function editQuizz($id, SecurityChecker $securityChecker)
 	{
+	    try{
 
-	    $quizz = $securityChecker->getCheckedQuizz($id);
+	        $quizz = $securityChecker->getCheckedQuizz($id);
+
+	    } catch(\Exception $e){
+
+	        return $this->redirectToRoute('userQuizz');
+	    }
+
 
 		$constant = new Constant();
 
@@ -89,10 +96,17 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/remove/{id}", name="removeQuizz", requirements={"id"="\d+"})
 	 */
-	public function removeQuizz($id, imageService $imageService, SecurityChecker $securityChecker)
+	public function removeQuizz($id, ImageService $imageService, SecurityChecker $securityChecker)
 	{
 
-	    $quizz = $securityChecker->getCheckedQuizz($id);
+	    try{
+
+	        $quizz = $securityChecker->getCheckedQuizz($id);
+
+	    } catch(\Exception $e) {
+
+	        return $this->redirectToRoute('userQuizz');
+	    }
 
 		$imageService->removeImages($quizz);
 
