@@ -147,12 +147,17 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('editQuizz', array('id' => $id));
 	    }
 
+		if ($question->getImage() != null)
+		{
+			$imageService->removeImage( Constant::PATH_IMAGE_QUESTION, $question->getImage() );
 
-		$imageService ->removeImage(Constant::PATH_IMAGE_QUESTION, $question->getImage());
-
-		foreach ($question->getAnswers() as $answer){
-
-			$imageService ->removeImage(Constant::PATH_IMAGE_ANSWER, $answer->getImage());
+			foreach ( $question->getAnswers() as $answer )
+			{
+				if ($answer->getImage() != null)
+				{
+					$imageService->removeImage( Constant::PATH_IMAGE_ANSWER, $answer->getImage() );
+				}
+			}
 		}
 
 
