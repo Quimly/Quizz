@@ -34,8 +34,13 @@
             
             <p><a class="delete" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer le quizz</a></p>
             <p><a class="add" href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a></p>
-            <p><button class="show-details-all-questions">Afficher toutes les questions</button><button class="hide-details-all-questions">Masquer toutes les questions</button></p>
             
+            {% if quizz.questions|length > 0 %}
+            	<p>
+            		<button class="show-details-all-questions">Afficher toutes les questions</button>
+            		<button class="hide-details-all-questions">Masquer toutes les questions</button>
+        		</p>
+            {% endif %}
         </div>
         <div>
             {% if quizz.image is not null %}
@@ -48,7 +53,15 @@
     
 		<div class="question-wrap">
 		
-			<p>Question n°{{loop.index}} : {{ question.entitled }} <button class="show-details-question">Afficher</button><button class="hide-details-question">Masquer</button><button class="show-details-all-answers">Afficher toutes les réponses</button><button class="hide-details-all-answers">Masquer toutes les réponses</button></p>
+			<p>Question n°{{loop.index}} : {{ question.entitled }} 
+				<button class="show-details-question">Afficher</button>
+				<button class="hide-details-question">Masquer</button>
+				
+				{% if question.answers|length > 0 %}
+    				<button class="show-details-all-answers">Afficher toutes les réponses</button>
+    				<button class="hide-details-all-answers">Masquer toutes les réponses</button>
+				{% endif %}
+			</p>
 			
 			<div class="container-question">
 			
