@@ -1,84 +1,123 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	<link href="{{ asset('build/asset/quizz/detailQuizz.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('build/asset/quizz/detailQuizz.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
-    <h2>{{ quizz.title }}</h2>
-    <p>Status:
-        {% if quizz.published %}
-            publié
-        {% else %}
-            Non publié
-        {% endif %}
-        <a href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
-        <a href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a>
-    </p>
-    <p>Description:
-        {% if quizz.description is not null %}
-            {{ quizz.description }}
-        {% else %}
-            Aucune description
-        {% endif %}
-    </p>
-    <p>Image:
-        {% if quizz.image is not null %}
-            <img class="quizz-img" src="{{ asset(constant('PATH_IMAGE_QUIZZ', constant) ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
-        {% else %}
-            Aucune image
-        {% endif %}
-    </p>
+    <h1 class="titre-quizz">{{ quizz.title }}</h1>
     
-    <ul>
+	<div class="container-description">
+    	<div>
+            <p>Status:
+                {% if quizz.published %}
+                    publié
+                {% else %}
+                    Non publié
+                {% endif %}
+            </p>
+            
+            <p>Date de création: {{ quizz.created|date('d-m-Y') }}</p>
+            
+            <p>Description:</p>
+            
+            {% if quizz.description is not null %}
+                <p class="description-quizz">{{ quizz.description }}</p>
+            {% else %}
+                <p class="description-quizz">Aucune description</p>
+            {% endif %}
+            
+            <p><a class="delete" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer le quizz</a></p>
+            <p><a class="add" href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a></p>
+            <p><button class="show-details-all-questions">Afficher toutes les questions</button><button class="hide-details-all-questions">Masquer toutes les questions</button></p>
+            
+        </div>
+        <div>
+            {% if quizz.image is not null %}
+                <img class="quizz-img" src="{{ asset(constant('PATH_IMAGE_QUIZZ', constant) ~ quizz.image.url) }}" alt="{% if quizz.image.alt is not null %} {{ quizz.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+            {% endif %}
+        </div>
+    </div>
     
     {% for question in quizz.questions %}
-		<li>
-        <p>{{ question.entitled }}
-
-            {% if question.published %}
-                <span>(publié)</span>
-            {% else %}
-                <span>(non publié)</span>
-            {% endif %}
     
-            <a href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a>
-        </p>
-        {% if question.image is not null %}
-            <img class="question-img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
-        {% endif %}
-        <ul>
-        {% for answer in question.answers %}
-			<li>
-            <p>{{ answer.entitled }}
-    
-                {% if answer.published %}
-                    <span>(publié)</span>
-                {% else %}
-                    <span>(non publié)</span>
-                {% endif %}
-            </p>
+		<div class="question-wrap">
+		
+			<p>Question n°{{loop.index}} : {{ question.entitled }} <button class="show-details-question">Afficher</button><button class="hide-details-question">Masquer</button><button class="show-details-all-answers">Afficher toutes les réponses</button><button class="hide-details-all-answers">Masquer toutes les réponses</button></p>
+			
+			<div class="container-question">
+			
+    			<div class="container-description">
+    				
+    				<div>          
+                            {% if question.published %}
+                                <span>(publié)</span>
+                            {% else %}
+                                <span>(non publié)</span>
+                            {% endif %}
+                    
+                            <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a></p>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        {% if question.image is not null %}
+                            <img class="question-img" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ question.image.url) }}" alt="{% if question.image.alt is not null %} {{ question.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+                        {% endif %}
+                    </div>
+                    
+                </div>
             
-            {% if answer.correct %}
-                    <p>Cette réponse est VRAI</p>
-            {% else %}
-                    <p>Cette réponse est FAUSSE</p>
-            {% endif %}
-            
-            <p>Explication:
-                {% if answer.explanation is not null %}
-                    {{ answer.explanation }}
-                {% else %}
-                    Aucune explication
-                {% endif %}
-            </p>
-            
-            {% if answer.image is not null %}
-            <img  class ="answer-img" src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answer.image.url) }}" alt="{% if answer.image.alt is not null %} {{ answer.image.alt }}{% else %} Aucune description d'image{% endif %}" />
-        {% endif %}
-            
-    	</li>	
-        {% endfor %}
-        </ul>
-		</li>
+                {% for answer in question.answers %}
+                
+        			<div class="answer-wrap {% if answer.correct %}true-answer{% else %}false-answer{% endif %}">
+        			
+            			<p>Réponse n°{{loop.index}} : {{ answer.entitled }}  <button class="show-details-answer">Afficher</button><button class="hide-details-answer">Masquer</button></p>
+            			
+            			<div class="container-answer">
+            			
+            				<div class="container-description">
+            				
+            					<div>      
+                                    <p>{% if answer.published %}
+                                            <span>(publié)</span>
+                                        {% else %}
+                                            <span>(non publié)</span>
+                                        {% endif %}
+                                    </p>
+                                    
+                                    <p>Explication:
+                                        {% if answer.explanation is not null %}
+                                            {{ answer.explanation }}
+                                        {% else %}
+                                            Aucune explication
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                
+                                <div>                    
+                                    {% if answer.image is not null %}
+                                    	<img  class ="answer-img" src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answer.image.url) }}" alt="{% if answer.image.alt is not null %} {{ answer.image.alt }}{% else %} Aucune description d'image{% endif %}" />
+                                    {% endif %}
+                                </div>
+                                
+                             </div>
+                             
+                         </div>
+                         
+                     </div>
+                    
+            	
+                {% endfor %}
+            </div>
+        </div>
+        		
     {% endfor %}
-    </ul>
+    
 
 {% endblock %}

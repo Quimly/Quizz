@@ -8,21 +8,3 @@
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-
-.titre-quizz{
-	font-size: 30px;
-}
-
-.description-quizz{
-	font-size: 18px;
-}
-
-.resume-quizz-wrap a {
-	color:white
-}
-
-.resume-quizz-wrap a.delete {
-	color: red;
-	font-weight: bolder;
-	text-decoration: none;
-}
