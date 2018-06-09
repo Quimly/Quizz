@@ -1,0 +1,50 @@
+.titre-quizz {
+	margin:0;
+	font-size: 30px;
+	color: #343434;
+	text-align: center;
+	font-size:50px;
+}
+
+.container-description{
+	display: flex;
+	justify-content: space-between;
+	height: auto;
+}
+
+.question-wrap {
+	color:white;
+	margin: 20px 30px;
+	border-radius: 20px 20px;
+	background-image: url("../background/footer_lodyas.png");
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.answer-wrap {
+	color:#343434;
+	margin: 20px 30px;
+	border-radius: 20px 20px;
+	background-image: url("../background/bgnoise_lg.png");
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.quizz-img {
+	max-width: 500px;
+	height: auto;
+}
+
+.question-img {
+	max-width: 400px;
+	height: auto;
+}
+
+.question-img {
+	max-width: 300px;
+	height: auto;
+}

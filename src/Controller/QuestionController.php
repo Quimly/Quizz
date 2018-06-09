@@ -103,7 +103,7 @@ class QuestionController extends Controller
 			        }
 			        $answer->getImage()->setUrl($fileName);
 			        $answer->getImage()->setUpdated(new \DateTime());
-			        $quizz->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
+			        $answer->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
 			        $entityManager->persist($answer->getImage());
 
 			    } else {
