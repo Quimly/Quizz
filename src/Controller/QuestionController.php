@@ -2,19 +2,13 @@
 
 namespace App\Controller;
 
+use App\Service\ImageService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Filesystem\Filesystem;
-
-use App\Service\ImageUploader;
 use App\Service\SecurityChecker;
-
 use App\Form\QuestionType;
-
-use App\Entity\Constant;
 use App\Entity\Question;
-use App\Entity\Quizz;
 use App\Entity\Image;
 use App\Entity\Answer;
 
@@ -30,10 +24,10 @@ class QuestionController extends Controller
 	 * Crée une question qui sera lié à un quizz. Possibilité d'associé une image a cette question et de l'uploader sur le serveur
 	 * @param int  $id Id du quizz associé à la question
 	 * @param Request  $request
-	 * @param ImageUploader $imageUploader
+	 * @param ImageService $imageService
 	 * @Route("profile/quizz/{id}/addquestion/", name="addQuestion", requirements={"id"="\d+"})
 	 */
-    public function createQuestion($id, Request $request, ImageUploader $imageUploader, SecurityChecker $securityChecker)
+    public function createQuestion($id, Request $request, ImageService $imageService, SecurityChecker $securityChecker)
 	{
 
 		$quizz = $securityChecker->getCheckedQuizz($id);
@@ -69,7 +63,7 @@ class QuestionController extends Controller
 			if($question->getImage()->getFile() != null) {
 
 				$file = $question->getImage()->getFile();
-				$fileName = $imageUploader->upload($file, 'question');
+				$fileName = $imageService->upload($file, 'question');
 
 				if (!$fileName){
 					throw $this->createNotFoundException(
@@ -94,7 +88,7 @@ class QuestionController extends Controller
 			    if($answer->getImage()->getFile() != null) {
 
 			        $file = $answer->getImage()->getFile();
-			        $fileName = $imageUploader->upload($file, 'answer');
+			        $fileName = $imageService->upload($file, 'answer');
 
 			        if (!$fileName){
 			            throw $this->createNotFoundException(
@@ -134,24 +128,13 @@ class QuestionController extends Controller
 	 * @param int  $id Id de la question a supprimer
 	 * @Route("profile/quizz/remove/{id}/question/{questionId}/", name="removeQuestion", requirements={"id"="\d+", "questionId"="\d+"})
 	 */
-	public function removeQuestion($id, $questionId, FileSystem $fileSystem, SecurityChecker $securityChecker)
+	public function removeQuestion($id, $questionId, ImageService $imageService, SecurityChecker $securityChecker)
 	{
-
 
 	    $question = $securityChecker->getCheckedQuestion($id, $questionId);
 
-		if($question->getImage() != null) {
+		$imageService->removeImages($question);
 
-			$fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
-		}
-
-		foreach ($question->getAnswers() as $answer) {
-
-		    if($answer->getImage() != null) {
-
-		        $fileSystem->remove(Constant::PATH_IMAGE_ANSWER . $answer->getImage()->getUrl());
-		    }
-		}
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($question);
 		$entityManager->flush();

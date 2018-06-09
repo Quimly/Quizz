@@ -3,15 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-use App\Service\ImageUploader;
 use App\Service\SecurityChecker;
-
+use App\Service\ImageService;
 use App\Form\QuizzType;
-
 use App\Entity\Constant;
 use App\Entity\Quizz;
 use App\Entity\Image;
@@ -21,7 +17,7 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/", name="createQuizz")
 	 */
-	public function createQuizz(Request $request, ImageUploader $imageUploader)
+	public function createQuizz(Request $request, ImageService $imageService)
 	{
 		$quizz = new Quizz();
 		$image = new Image();
@@ -42,7 +38,7 @@ class QuizzController extends Controller
 			if($quizz->getImage()->getFile() != null) {
 
 				$file = $quizz->getImage()->getFile();
-				$fileName = $imageUploader->upload($file, 'quizz');
+				$fileName = $imageService->upload($file, 'quizz');
 
 				if (!$fileName){
 					throw $this->createNotFoundException(
@@ -93,31 +89,12 @@ class QuizzController extends Controller
 	/**
 	 * @Route("profile/quizz/remove/{id}", name="removeQuizz", requirements={"id"="\d+"})
 	 */
-	public function removeQuizz($id, FileSystem $fileSystem, SecurityChecker $securityChecker)
+	public function removeQuizz($id, imageService $imageService, SecurityChecker $securityChecker)
 	{
 
 	    $quizz = $securityChecker->getCheckedQuizz($id);
 
-		if($quizz->getImage() != null) {
-
-			$fileSystem->remove(Constant::PATH_IMAGE_QUIZZ . $quizz->getImage()->getUrl());
-		}
-
-		foreach ($quizz->getQuestions() as $question) {
-
-		    if($question->getImage() != null) {
-
-		        $fileSystem->remove(Constant::PATH_IMAGE_QUESTION . $question->getImage()->getUrl());
-		    }
-
-		    foreach ($question->getAnswers() as $answer) {
-
-		        if($answer->getImage() != null) {
-
-		            $fileSystem->remove(Constant::PATH_IMAGE_ANSWER . $answer->getImage()->getUrl());
-		        }
-		    }
-		}
+		$imageService->removeImages($quizz);
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);
