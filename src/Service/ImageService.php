@@ -44,6 +44,9 @@ class ImageService
 
 	public function removeImage($folder, Image $image)
 	{
-		$this->fileSystem->remove($folder . '/' . $image->getUrl());
+		if ($image->getUrl() != null)
+		{
+			$this->fileSystem->remove($folder . '/' . $image->getUrl());
+		}
 	}
 }

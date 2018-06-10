@@ -108,17 +108,26 @@ class QuizzController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
-		$imageService->removeImage(Constant::PATH_IMAGE_QUIZZ, $quizz->getImage());
+	    if ($quizz->getImage() != null)
+	    {
+		    $imageService->removeImage( Constant::PATH_IMAGE_QUIZZ, $quizz->getImage() );
 
-		foreach ($quizz->getQuestions() as $question){
+		    foreach ( $quizz->getQuestions() as $question )
+		    {
+			    if ($question->getImage() != null)
+			    {
+				    $imageService->removeImage( Constant::PATH_IMAGE_QUESTION, $question->getImage() );
 
-			$imageService->removeImage(Constant::PATH_IMAGE_QUESTION, $question->getImage());
-
-			foreach ($question->getAnswers() as $answer){
-
-				$imageService->removeImage(Constant::PATH_IMAGE_ANSWER, $answer->getImage());
-			}
-		}
+				    foreach ( $question->getAnswers() as $answer )
+				    {
+					    if ($answer->getImage() != null)
+					    {
+					    	$imageService->removeImage( Constant::PATH_IMAGE_ANSWER, $answer->getImage() );
+					    }
+				    }
+			    }
+		    }
+	    }
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);
