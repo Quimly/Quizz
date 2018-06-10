@@ -11,6 +11,7 @@ use App\Entity\Image;
 class ImageService
 {
 	private $targetDirectory;
+
 	private $fileSystem;
 
 
@@ -21,6 +22,11 @@ class ImageService
 
 	}
 
+	public function getTargetDirectory()
+	{
+	    return $this->targetDirectory;
+	}
+	
 	public function upload(UploadedFile $file, $folder)
 	{
 		$authorizedFolders = ['quizz', 'user', 'question', 'answer'];
@@ -36,17 +42,11 @@ class ImageService
 		return $fileName;
 	}
 
-	public function getTargetDirectory()
-	{
-		return $this->targetDirectory;
-	}
-
-
-	public function removeImage($folder, Image $image)
+	public function removeImage(Image $image, $folder)
 	{
 		if ($image->getUrl() != null)
 		{
-			$this->fileSystem->remove($folder . '/' . $image->getUrl());
+			$this->fileSystem->remove($folder . $image->getUrl());
 		}
 	}
 }

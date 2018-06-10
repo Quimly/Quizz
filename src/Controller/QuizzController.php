@@ -110,23 +110,25 @@ class QuizzController extends Controller
 
 	    if ($quizz->getImage() != null)
 	    {
-		    $imageService->removeImage( Constant::PATH_IMAGE_QUIZZ, $quizz->getImage() );
+	        $imageService->removeImage( $quizz->getImage(), Constant::PATH_IMAGE_QUIZZ );
 
-		    foreach ( $quizz->getQuestions() as $question )
-		    {
-			    if ($question->getImage() != null)
-			    {
-				    $imageService->removeImage( Constant::PATH_IMAGE_QUESTION, $question->getImage() );
+	    }
 
-				    foreach ( $question->getAnswers() as $answer )
-				    {
-					    if ($answer->getImage() != null)
-					    {
-					    	$imageService->removeImage( Constant::PATH_IMAGE_ANSWER, $answer->getImage() );
-					    }
-				    }
-			    }
-		    }
+	    foreach ( $quizz->getQuestions() as $question )
+	    {
+	        if ($question->getImage() != null)
+	        {
+	            $imageService->removeImage( $question->getImage(), Constant::PATH_IMAGE_QUESTION );
+
+	        }
+
+	        foreach ( $question->getAnswers() as $answer )
+	        {
+	            if ($answer->getImage() != null)
+	            {
+	                $imageService->removeImage( $answer->getImage(), Constant::PATH_IMAGE_ANSWER );
+	            }
+	        }
 	    }
 
 		$entityManager = $this->getDoctrine()->getManager();

@@ -149,15 +149,16 @@ class QuestionController extends Controller
 
 		if ($question->getImage() != null)
 		{
-			$imageService->removeImage( Constant::PATH_IMAGE_QUESTION, $question->getImage() );
+		    $imageService->removeImage( $question->getImage(), Constant::PATH_IMAGE_QUESTION);
 
-			foreach ( $question->getAnswers() as $answer )
-			{
-				if ($answer->getImage() != null)
-				{
-					$imageService->removeImage( Constant::PATH_IMAGE_ANSWER, $answer->getImage() );
-				}
-			}
+		}
+
+		foreach ( $question->getAnswers() as $answer )
+		{
+		    if ($answer->getImage() != null)
+		    {
+		        $imageService->removeImage( $answer->getImage() ,Constant::PATH_IMAGE_ANSWER);
+		    }
 		}
 
 
