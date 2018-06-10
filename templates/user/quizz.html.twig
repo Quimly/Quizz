@@ -8,7 +8,7 @@
 	
 	<h1>Mes Quizz</h1>
     {% for quizz in user.quizz %}
-    	<div class="resume-quizz-wrap">
+    	<div class="resume-quizz-wrap background-theme-1">
             <h2><a class="titre-quizz" href="{{ path('editQuizz', { 'id' : quizz.id })}}">{{ quizz.title }}</a></h2>
             
             	{% if quizz.published %} 

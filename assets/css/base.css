@@ -7,7 +7,6 @@ body {
 	margin:0;
 	box-sizing: border-box;
 	font-family: monospace;
-	background-image: url("../background/footer_lodyas.png");
 }
 
 /* Mise en place du systeme de grille */
@@ -33,7 +32,6 @@ div#nav-container {
 
 div#content-container {
 	grid-area: c;
-	background-image: url("../background/bgnoise_lg.png");
 	border-top-left-radius: 80px 80px;
 	border-bottom-left-radius: 80px 80px;
 	padding: 80px 30px;
@@ -138,3 +136,14 @@ div#footer-container{
 	font-weight: bolder;
 	text-decoration: none;
 }
+
+.background-theme-1 {
+	color:white;
+	background-image: url("../background/footer_lodyas.png");
+}
+
+.background-theme-2 {
+	color: #343434;
+	background-image: url("../background/bgnoise_lg.png");
+}
+

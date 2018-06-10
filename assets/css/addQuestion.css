@@ -1,0 +1,8 @@
+#answer-fields-list li {
+	color: white;
+	list-style: none;
+	border-radius: 10px 10px;
+	margin: 20px 50px;
+	padding: 15px 15px;
+	background-image: url("../background/footer_lodyas.png");
+}

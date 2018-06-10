@@ -18,7 +18,7 @@ Encore
 
     .addEntry('asset/template/base', './assets/js/base.js')
     .addEntry('asset/testAjax', './assets/js/testAjax.js')
-    .addEntry('asset/prototype', './assets/js/prototype.js')
+    .addEntry('asset/question/addQuestion', './assets/js/addQuestion.js')
     .addEntry('asset/login/login', './assets/js/login.js')
     .addEntry('asset/quizz/userList', './assets/js/userQuizzList.js')
     .addEntry('asset/quizz/detailQuizz', './assets/js/detailQuizz.js')

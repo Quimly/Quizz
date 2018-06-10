@@ -1,5 +1,7 @@
-$(function () {
-    $('.add-another-collection-widget').click(function (e) {
+require('../css/addQuestion.css');
+
+$(function() {
+	$('.add-another-collection-widget').click(function (e) {
 
         e.preventDefault();
 
@@ -49,4 +51,5 @@ $(function () {
             return false;
         });
     });
+
 });
