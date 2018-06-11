@@ -155,4 +155,159 @@ class QuestionController extends Controller
 
 		return $this->redirectToRoute('editQuizz', array('id' => $id));
 	}
+
+
+	/**
+	 * Formulaire qui permet de modifier une question ainsu que les réponses associées, permet aussi d'ajouter des réponses
+	 * @Route("profile/quizz/{id}/question/{questionId}/edit/", name="editQuestion", requirements={"id"="\d+", "questionId"="\d+"})
+	 */
+	public function editQuestion($id, $questionId, Request $request, ImageService $imageService, SecurityChecker $securityChecker)
+	{
+	    //__ On vérifie que les variable récupéré en get soient cohérentes (question qui correspond au quizz etc..)
+	    try {
+
+	        $question = $securityChecker->getCheckedQuestion($id, $questionId);
+
+	    } catch (\Exception $e) {
+
+	        return $this->redirectToRoute('userQuizz');
+	    }
+
+	    //__ On récupère l'image associé à la question
+	    $image_question = $question->getImage();
+
+	    //__ On réinitialise l'image pour générer un formulaire
+	    $image = new Image();
+	    $question->setImage($image);
+
+	    //__ On récupère les images associées aux réponses
+	    $images_answers = [];
+
+	    foreach ($question->getAnswers() as $answer) {
+
+	        $images_answers[$answer->getId()] = $answer->getImage();
+
+	    }
+
+	    //__ On hydrate nos entités avec les données récupéré en base de données, sauf pour les entitées images
+	    $form = $this->createForm(QuestionType::class, $question);
+
+        //__ On vérifie le formulaire
+	    $form->handleRequest($request);
+
+	    //__ Si le formulaire est soumis et qu'il est valide on enregistre nos entités en base de données
+	    if ($form->isSubmitted() && $form->isValid())
+	    {
+
+	        $entityManager = $this->getDoctrine()->getManager();
+
+	        //__ Si l'utilisateur associe une nouvelle image à la question, on remplace l'ancienne par la nouvelle
+	        if($question->getImage()->getFile() != null) {
+
+	            //__ On suprrime l'ancienne image de la question si elle existe
+	            if($image_question !== null) {
+
+	                $imageService->removeImage($image_question, Constant::PATH_IMAGE_QUESTION);
+	            }
+
+	            //__ On upload la nouvelle image
+	            $file = $question->getImage()->getFile();
+	            $fileName = $imageService->upload($file, 'question');
+
+	            if (!$fileName){
+	                throw $this->createNotFoundException(
+	                    'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
+	                    );
+	            }
+	            //__ On met à jour les données de la question
+	            $question->getImage()->setUrl($fileName);
+	            $question->getImage()->setUpdated(new \DateTime());
+	            $question->getImage()->setAlt('Illustration de la question "' . $question->getEntitled() . '" ');
+	            $entityManager->persist($question->getImage());
+
+	        } else {
+	            //__ Si l'utilisateur n'a pas joint de nouvelle image, on remet l'ancienne image
+	            $question->setImage($image_question);
+	        }
+
+	        foreach($question->getAnswers() as $answer) {
+
+	            //__ Si c'est une nouvelle réponse (qui n'exsiatait pas en base de données)
+	            if($answer->getId() === null) {
+
+                    //__ On crée les données de la nouvelle réponse réponse
+	                $answer->setCreated(new \DateTime());
+	                $answer->setUpdated(new \DateTime());
+	                $answer->setQuestion($question);
+
+	                //__ Si la réponse est accompagné d'une image, on l'upload sur le serveur et on met à jour la base de données
+	                if($answer->getImage()->getFile() != null) {
+
+	                    $file = $answer->getImage()->getFile();
+	                    $fileName = $imageService->upload($file, 'answer');
+
+	                    if (!$fileName){
+	                        throw $this->createNotFoundException(
+	                            'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
+	                            );
+	                    }
+	                    $answer->getImage()->setUrl($fileName);
+	                    $answer->getImage()->setUpdated(new \DateTime());
+	                    $answer->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
+	                    $entityManager->persist($answer->getImage());
+
+	                } else {
+	                    $answer->setImage(null);
+	                }
+
+                //__ Sinon, il s'agit d'une réponse qui existe déjà en base de données et il faut juste mettre les information à jour
+	            } else {
+
+	                //__ Si l'utilisateur associe une nouvelle image à la reponse, , on remplace l'ancienne par la nouvelle
+	                if($answer->getImage()->getFile() != null) {
+
+	                    //__ Si il y avait une ancienne image associé à cette réponse on la surpprime
+	                    if($images_answers[$answer->getId()] !== null) {
+
+	                        $imageService->removeImage($images_answers[$answer->getId()], Constant::PATH_IMAGE_ANSWER);
+	                    }
+
+	                    $file = $answer->getImage()->getFile();
+	                    $fileName = $imageService->upload($file, 'answer');
+
+	                    if (!$fileName){
+	                        throw $this->createNotFoundException(
+	                            'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
+	                            );
+	                    }
+	                    $answer->getImage()->setUrl($fileName);
+	                    $answer->getImage()->setUpdated(new \DateTime());
+	                    $answer->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
+	                    $entityManager->persist($answer->getImage());
+
+	                } else {
+	                    $answer->setImage($images_answers[$answer->getId()]);
+	                }
+	            }
+
+	            $entityManager->persist($answer);
+
+	        }
+
+	        $entityManager->persist($question);
+	        $entityManager->flush();
+
+	        return $this->redirectToRoute('editQuizz', array('id' => $id));
+	    }
+
+	    //__ View
+	    return $this->render(
+	        'question/index.html.twig',
+	        array(
+	            'form' => $form->createView()
+	        )
+	    );
+	}
+
+
 }

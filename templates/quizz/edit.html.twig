@@ -75,7 +75,7 @@
                             {% endif %}
                     
                             <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer la question</a></p>
-                            <p><a class="add" href="{{ path('addAnswer', { 'id' : quizz.id, 'questionId' : question.id })}}">Ajouter/Modifier une réponse</a></p>
+                            <p><a class="add" href="{{ path('editQuestion', { 'id' : quizz.id, 'questionId' : question.id })}}">Editer la question</a></p>
 
                     </div>
                     
