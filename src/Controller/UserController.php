@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,6 +21,7 @@ class UserController extends Controller
 		$form = $this->createForm(UserType::class, $user);
 
 		$form->handleRequest($request);
+
 		if ($form->isSubmitted() && $form->isValid())
 		{
 			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -42,15 +44,40 @@ class UserController extends Controller
 	}
 
 	/**
-	 * @Route("/update", name="update")
+	 * @Route("/profile/edit/", name="userEdit")
 	 */
-	public function update()
+	public function update(Request $request, UserPasswordEncoderInterface $passwordEncoder)
 	{
-		//TODO: implement update function (update user data)
+		$user = $this->getUser();
+		$form = $this->createForm(EditUserType::class, $user);
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid())
+		{
+			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+			$user->setPassword($password);
+
+//			$user->setCreated(new \DateTime());
+			$user->setUpdated(new \DateTime());
+
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($user);
+			$entityManager->flush();
+
+			return $this->redirectToRoute('userEdit');
+		}
+
+		return $this->render(
+			'user/edit.html.twig', array(
+				'form' => $form->createView(),
+				'user' => $user
+			)
+		);
 	}
 	
 	/**
-	 * @Route("/profile/myquizz", name="userQuizz")
+	 * @Route("/profile/myquizz/", name="userQuizz")
 	 */
 	public function getUserQuizz()
 	{

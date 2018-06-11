@@ -5,6 +5,7 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     		<li><a href="{{ path('logout')}}">Se déconnecter</a></li>
     		<li><a href="{{ path('userQuizz')}}">Mes quizz</a></li>
+			<li><a href="{{ path('userEdit')}}">Mon profil</a></li>
     	{% else %}
             <li><a href="{{ path('registration')}}">Inscription</a></li>
     		<li><a href="{{ path('login')}}">Connexion</a></li>
