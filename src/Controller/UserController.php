@@ -17,7 +17,13 @@ class UserController extends Controller
 	 */
 	public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
 	{
-		$user = new User();
+
+
+		if (!$user = $this->getUser())
+		{
+			$user = new User();
+		}
+
 		$form = $this->createForm(UserType::class, $user);
 
 		$form->handleRequest($request);
@@ -46,35 +52,34 @@ class UserController extends Controller
 	/**
 	 * @Route("/profile/edit/", name="userEdit")
 	 */
-	public function update(Request $request, UserPasswordEncoderInterface $passwordEncoder)
-	{
-		$user = $this->getUser();
-		$form = $this->createForm(EditUserType::class, $user);
-
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid())
-		{
-			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-			$user->setPassword($password);
-
-//			$user->setCreated(new \DateTime());
-			$user->setUpdated(new \DateTime());
-
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($user);
-			$entityManager->flush();
-
-			return $this->redirectToRoute('userEdit');
-		}
-
-		return $this->render(
-			'user/edit.html.twig', array(
-				'form' => $form->createView(),
-				'user' => $user
-			)
-		);
-	}
+//	public function update(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+//	{
+//		$user = $this->getUser();
+//		$form = $this->createForm(EditUserType::class, $user);
+//
+//		$form->handleRequest($request);
+//
+//		if ($form->isSubmitted() && $form->isValid())
+//		{
+//			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+//			$user->setPassword($password);
+//
+////			$user->setCreated(new \DateTime());
+//			$user->setUpdated(new \DateTime());
+//
+//			$entityManager = $this->getDoctrine()->getManager();
+//			$entityManager->persist($user);
+//			$entityManager->flush();
+//
+//			return $this->redirectToRoute('userEdit');
+//		}
+//
+//		return $this->render(
+//			'user/edit.html.twig', array(
+//				'form' => $form->createView(),
+//			)
+//		);
+//	}
 	
 	/**
 	 * @Route("/profile/myquizz/", name="userQuizz")
