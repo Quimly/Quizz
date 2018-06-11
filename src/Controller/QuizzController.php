@@ -83,6 +83,9 @@ class QuizzController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
+ 	    $entityManager = $this->getDoctrine()->getManager();
+ 	    $quizz = $entityManager->getRepository(Quizz::class)->getFullQuizzById($id);
+
 
 		$constant = new Constant();
 
@@ -109,29 +112,6 @@ class QuizzController extends Controller
 	    }
 
 	    $imageService->removeImagesQuizz($quizz);
-
-// 	    if ($quizz->getImage() != null)
-// 	    {
-// 	        $imageService->removeImage( $quizz->getImage(), Constant::PATH_IMAGE_QUIZZ );
-
-// 	    }
-
-// 	    foreach ( $quizz->getQuestions() as $question )
-// 	    {
-// 	        if ($question->getImage() != null)
-// 	        {
-// 	            $imageService->removeImage( $question->getImage(), Constant::PATH_IMAGE_QUESTION );
-
-// 	        }
-
-// 	        foreach ( $question->getAnswers() as $answer )
-// 	        {
-// 	            if ($answer->getImage() != null)
-// 	            {
-// 	                $imageService->removeImage( $answer->getImage(), Constant::PATH_IMAGE_ANSWER );
-// 	            }
-// 	        }
-// 	    }
 
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($quizz);

@@ -149,21 +149,6 @@ class QuestionController extends Controller
 
 	    $imageService->removeImagesQuestion($question);
 
-// 		if ($question->getImage() != null)
-// 		{
-// 		    $imageService->removeImage( $question->getImage(), Constant::PATH_IMAGE_QUESTION);
-
-// 		}
-
-// 		foreach ( $question->getAnswers() as $answer )
-// 		{
-// 		    if ($answer->getImage() != null)
-// 		    {
-// 		        $imageService->removeImage( $answer->getImage() ,Constant::PATH_IMAGE_ANSWER);
-// 		    }
-// 		}
-
-
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($question);
 		$entityManager->flush();

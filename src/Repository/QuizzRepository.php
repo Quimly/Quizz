@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Quizz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,6 +19,41 @@ class QuizzRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Quizz::class);
     }
+
+    public function getFullQuizzById($id)
+    {
+        // we use table quizz
+        return $this->createQueryBuilder('quizz')
+        // quizz.questions refers to the "questions" property on quizz
+        ->leftJoin('quizz.questions', 'q')
+        // selects all the questions  data to avoid the query
+        ->addSelect('q')
+        // q.answers refers to the "answers" property on question
+        ->leftJoin('q.answers', 'a')
+        // selects all the answers data to avoid the query
+        ->addSelect('a')
+        // selects the image data to quizz if it exist
+        ->leftJoin('quizz.image', 'quizz_i')
+        // selects all the quizz images  data to avoid the query
+        ->addSelect('quizz_i')
+        // selects the image data to questions if it exist
+        ->leftJoin('q.image', 'q_i')
+        // selects all the questions images  data to avoid the query
+        ->addSelect('q_i')
+        // selects the image data to answers if it exist
+        ->leftJoin('a.image', 'q_a')
+        // selects all the answers images  data to avoid the query
+        ->addSelect('q_a')
+        // Filter by Quizz Id
+        ->andWhere('quizz.id = :id')
+        // change placeholder by the value
+        ->setParameter('id', $id)
+        // create query
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
+
 
 //    /**
 //     * @return Quizz[] Returns an array of Quizz objects
