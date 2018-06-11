@@ -74,7 +74,7 @@
                                 <span>(non publié)</span>
                             {% endif %}
                     
-                            <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a></p>
+                            <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer la question</a></p>
                             <p><a class="add" href="{{ path('addAnswer', { 'id' : quizz.id, 'questionId' : question.id })}}">Ajouter/Modifier une réponse</a></p>
 
                     </div>
@@ -113,7 +113,7 @@
                                         {% endif %}
                                     </p>
                                     
-                                    <p><a class="delete" href="{{ path('removeAnswer', { 'id' : quizz.id, 'questionId' : question.id, 'answerId' : answer.id }) }}">Supprimer</a></p>
+                                    <p><a class="delete" href="{{ path('removeAnswer', { 'id' : quizz.id, 'questionId' : question.id, 'answerId' : answer.id }) }}">Supprimer le réponse</a></p>
                                 </div>
                                 
                                 <div>                    
