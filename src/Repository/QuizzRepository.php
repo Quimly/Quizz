@@ -83,7 +83,7 @@ class QuizzRepository extends ServiceEntityRepository
 		    return $q->getQuery()->getOneOrNullResult();
 	    }
 	    catch(\Doctrine\ORM\NonUniqueResultException $e) {
-		    return $e; //__ erreur à retourner ?
+		    return null;
 	    }
 
 
