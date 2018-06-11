@@ -75,7 +75,7 @@
                             {% endif %}
                     
                             <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer</a></p>
-                        </p>
+
                     </div>
                     
                     <div>
@@ -111,6 +111,8 @@
                                             Aucune explication
                                         {% endif %}
                                     </p>
+                                    
+                                    <p><a class="delete" href="{{ path('removeAnswer', { 'id' : quizz.id, 'questionId' : question.id, 'answerId' : answer.id }) }}">Supprimer</a></p>
                                 </div>
                                 
                                 <div>                    

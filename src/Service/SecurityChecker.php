@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 use App\Entity\Quizz;
 use App\Entity\Question;
+use App\Entity\Answer;
 
 class SecurityChecker
 {
@@ -55,5 +56,23 @@ class SecurityChecker
         }
 
         return $question;
+    }
+
+    public function getCheckedAnswer($quizz_id, $question_id, $answerId)
+    {
+        $question = $this->getCheckedQuestion($quizz_id, $question_id);
+
+        $answer = $this->entityManager->getRepository(Answer::class)->find($answerId);
+
+        if (!$answer) {
+
+            throw new NotFoundHttpException('La réponse n°'. $answerId . ' n\'existe pas');
+
+        } else if($answer->getQuestion() != $question) {
+
+            throw new NotFoundHttpException('Cette réponse n\'appartient pas à cette question');
+        }
+
+        return $answer;
     }
 }
