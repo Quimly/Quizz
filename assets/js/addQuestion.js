@@ -52,4 +52,11 @@ $(function() {
         });
     });
 
+	$('.img-delete-button').click(function (e) {
+
+        e.preventDefault();
+
+
+    })
+
 });

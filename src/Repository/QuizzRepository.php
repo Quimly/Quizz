@@ -22,7 +22,7 @@ class QuizzRepository extends ServiceEntityRepository
 
     public function getFullQuizzById($id)
     {
-
+        // we use table quizz
 	    $q = $this->createQueryBuilder('quizz')
 		    // quizz.questions refers to the "questions" property on quizz
 		          ->leftJoin('quizz.questions', 'q')

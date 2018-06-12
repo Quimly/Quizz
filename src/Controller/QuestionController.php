@@ -281,12 +281,15 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('editQuizz', array('id' => $id));
 	    }
 
+		$constant = new Constant();
+
 	    //__ View
 	    return $this->render(
 	        'question/index.html.twig',
 	        array(
-	            'form' => $form->createView()
-	        )
+	            'form' => $form->createView(),
+		        'image' => $image_question,
+	            'constant' => $constant	        )
 	    );
 	}
 

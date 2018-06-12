@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {#<script src="{{ asset('jquery.min.js') }}"></script>#}
+    <script src="{{ asset('jquery.min.js') }}"></script>
     <script src="{{ asset('build/asset/question/addQuestion.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -21,6 +21,16 @@
     {{ form_start(form, {'attr': {'class': 'form_main', 'autocomplete': 'off' }}) }}
 
     {{ form_row(form.entitled, {'label': 'Intitulé'}) }}
+
+    {% if image is defined %}
+
+        <div class="question-img-wrap">
+
+            {#<i class="far fa-times-circle"></i>#}
+            <div class="question-img-header"><button class="img-delete-button">X</button></div>
+            <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ image.url) }}">
+        </div>
+    {% endif %}
 
     {{ form_row(form.image.file, {'label': 'Image'}) }}
 
