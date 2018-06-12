@@ -173,15 +173,6 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
-	    //__ On récupère les images associées aux réponses
-	    $images_answers = [];
-
-	    foreach ($question->getAnswers() as $answer) {
-
-	        $images_answers[$answer->getId()] = $answer->getImage();
-
-	    }
-
 	    //__ On hydrate nos entités avec les données récupéré en base de données, sauf pour les entitées images
 	    $form = $this->createForm(QuestionType::class, $question);
 
@@ -233,67 +224,51 @@ class QuestionController extends Controller
 	            $question->setImage(null);
 	        }
 
-
-
-
 	        foreach($question->getAnswers() as $answer) {
 
-	            //__ Si c'est une nouvelle réponse (qui n'exsiatait pas en base de données)
 	            if($answer->getId() === null) {
 
-                    //__ On crée les données de la nouvelle réponse réponse
 	                $answer->setCreated(new \DateTime());
 	                $answer->setUpdated(new \DateTime());
 	                $answer->setQuestion($question);
+	            }
 
-	                //__ Si la réponse est accompagné d'une image, on l'upload sur le serveur et on met à jour la base de données
-	                if($answer->getImage()->getFile() != null) {
+	            if($answer->getImage() === null) {
 
-	                    $file = $answer->getImage()->getFile();
-	                    $fileName = $imageService->upload($file, 'answer');
+	                $answer->setImage(new Image());
+	            }
 
-	                    if (!$fileName){
-	                        throw $this->createNotFoundException(
-	                            'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
-	                            );
-	                    }
-	                    $answer->getImage()->setUrl($fileName);
-	                    $answer->getImage()->setUpdated(new \DateTime());
-	                    $answer->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
-	                    $entityManager->persist($answer->getImage());
+	            if($answer->getImage()->getFile() != null) {
 
-	                } else {
-	                    $answer->setImage(null);
+	                //__ On supprime l'ancienne image de la question si elle existe
+	                if($answer->getImage()->getUrl() !== null) {
+
+	                    $imageService->removeImage($answer->getImage(), Constant::PATH_IMAGE_ANSWER);
 	                }
 
-                //__ Sinon, il s'agit d'une réponse qui existe déjà en base de données et il faut juste mettre les information à jour
+	                //__ On upload la nouvelle image
+	                $file = $answer->getImage()->getFile();
+	                $fileName = $imageService->upload($file, 'answer');
+
+	                if (!$fileName){
+	                    throw $this->createNotFoundException(
+	                        'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
+	                        );
+	                }
+	                //__ On met à jour les données de la question
+	                $answer->getImage()->setUrl($fileName);
+	                $answer->getImage()->setUpdated(new \DateTime());
+	                $answer->getImage()->setAlt('Illustration de la question "' . $answer->getEntitled() . '" ');
+	                $entityManager->persist($answer->getImage());
+	            }
+
+	            else if($answer->getImage()->getUrl() !== null) {
+
+	                $entityManager->persist($answer->getImage());
+
 	            } else {
 
-	                //__ Si l'utilisateur associe une nouvelle image à la reponse, , on remplace l'ancienne par la nouvelle
-	                if($answer->getImage()->getFile() != null) {
-
-	                    //__ Si il y avait une ancienne image associé à cette réponse on la surpprime
-	                    if($images_answers[$answer->getId()] !== null) {
-
-	                        $imageService->removeImage($images_answers[$answer->getId()], Constant::PATH_IMAGE_ANSWER);
-	                    }
-
-	                    $file = $answer->getImage()->getFile();
-	                    $fileName = $imageService->upload($file, 'answer');
-
-	                    if (!$fileName){
-	                        throw $this->createNotFoundException(
-	                            'Ce dossier d\'image n\'est pas autorisé ou n\'existe pas'
-	                            );
-	                    }
-	                    $answer->getImage()->setUrl($fileName);
-	                    $answer->getImage()->setUpdated(new \DateTime());
-	                    $answer->getImage()->setAlt('Illustration de la réponse "' . $answer->getEntitled() . '" ');
-	                    $entityManager->persist($answer->getImage());
-
-	                } else {
-	                    $answer->setImage($images_answers[$answer->getId()]);
-	                }
+	                $answer->setImage(null);
 	            }
 
 	            $entityManager->persist($answer);
