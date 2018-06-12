@@ -173,13 +173,6 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
-	    //__ On récupère l'image associé à la question
-	    $image_question = $question->getImage();
-
-	    //__ On réinitialise l'image pour générer un formulaire
-	    $image = new Image();
-	    $question->setImage($image);
-
 	    //__ On récupère les images associées aux réponses
 	    $images_answers = [];
 
@@ -201,13 +194,18 @@ class QuestionController extends Controller
 
 	        $entityManager = $this->getDoctrine()->getManager();
 
+	        if($question->getImage() === null) {
+
+	            $question->setImage(new Image());
+	        }
+
 	        //__ Si l'utilisateur associe une nouvelle image à la question, on remplace l'ancienne par la nouvelle
 	        if($question->getImage()->getFile() != null) {
 
-	            //__ On suprrime l'ancienne image de la question si elle existe
-	            if($image_question !== null) {
+	            //__ On supprime l'ancienne image de la question si elle existe
+	            if($question->getImage()->getUrl() !== null) {
 
-	                $imageService->removeImage($image_question, Constant::PATH_IMAGE_QUESTION);
+	                $imageService->removeImage($question->getImage(), Constant::PATH_IMAGE_QUESTION);
 	            }
 
 	            //__ On upload la nouvelle image
@@ -224,11 +222,19 @@ class QuestionController extends Controller
 	            $question->getImage()->setUpdated(new \DateTime());
 	            $question->getImage()->setAlt('Illustration de la question "' . $question->getEntitled() . '" ');
 	            $entityManager->persist($question->getImage());
+	        }
+
+	        else if($question->getImage()->getUrl() !== null) {
+
+	            $entityManager->persist($question->getImage());
 
 	        } else {
-	            //__ Si l'utilisateur n'a pas joint de nouvelle image, on remet l'ancienne image
-	            $question->setImage($image_question);
+
+	            $question->setImage(null);
 	        }
+
+
+
 
 	        foreach($question->getAnswers() as $answer) {
 
