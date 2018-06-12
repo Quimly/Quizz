@@ -39,6 +39,10 @@
         data-widget-tags="{{ '<li></li>'|e }}">
         {% for answerField in form.answers %}
             <li>
+                {% if imagesA[loop.index] is defined %}
+                <img src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ imagesA[loop.index].url) }}">
+                {% endif %}
+
                 {{ form_errors(answerField) }}
                 {{ form_widget(answerField) }}
             </li>

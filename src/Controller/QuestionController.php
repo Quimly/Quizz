@@ -179,6 +179,8 @@ class QuestionController extends Controller
         //__ On vérifie le formulaire
 	    $form->handleRequest($request);
 
+	    $image = $question->getImage();
+
 	    //__ Si le formulaire est soumis et qu'il est valide on enregistre nos entités en base de données
 	    if ($form->isSubmitted() && $form->isValid())
 	    {
@@ -283,13 +285,22 @@ class QuestionController extends Controller
 
 		$constant = new Constant();
 
+	    $answers = $question->getAnswers();
+
+		foreach ( $answers as $answer )
+		{
+			$imagesA[] = $answer->getImage();
+	    }
+
 	    //__ View
 	    return $this->render(
 	        'question/index.html.twig',
 	        array(
 	            'form' => $form->createView(),
-		        'image' => $image_question,
-	            'constant' => $constant	        )
+		        'image' => $image,
+	            'constant' => $constant,
+		        'imagesA' => $imagesA
+	        )
 	    );
 	}
 
