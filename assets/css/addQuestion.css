@@ -6,3 +6,49 @@
 	padding: 15px 15px;
 	background-image: url("../background/footer_lodyas.png");
 }
+
+.question-img-wrap {
+	background-color: white;
+	width: 250px;
+	border-radius: 6px;
+	border: 1px solid #ced4da;
+	text-align: center;
+}
+
+.question-img-header {
+	border-bottom: 1px solid #ced4da;
+	border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+	height: 30px;
+	position: relative;
+	background-color: #eeeeee;
+	text-align: left;
+	padding: 2px 0 0 10px;
+	font-style: italic;
+	font-weight: bold;
+	color: #6e6e6e;
+
+}
+
+.img-delete-button {
+	border-radius: 4px;
+	background-color: #e6e6e6;
+	font-weight: bold;
+	font-size: .6em;
+	position: absolute;
+	right: 5px;
+	margin-top: 3px;
+	cursor: pointer;
+	transition: .2s;
+	height: 18px;
+}
+
+.img-delete-button:hover {
+	background-color: #bfbfbf;
+	transition: .2s;
+}
+
+.img-delete-button:focus {
+	outline:0;
+}
+
