@@ -41,6 +41,7 @@ class QuestionController extends Controller
 
         //__ Initialisation des instances question et image
 		$question = new Question();
+		$question->setImage(new Image());
 
 		for($i = 0; $i < 2; $i++){
 		    ${'answer_'.$i} = new Answer();
@@ -78,7 +79,7 @@ class QuestionController extends Controller
 				$question->getImage()->setUrl($fileName);
 				$question->getImage()->setUpdated(new \DateTime());
 				$question->getImage()->setAlt('Illustration de la question "' . $question->getEntitled() . '" ');
-				$entityManager->persist($image);
+				$entityManager->persist($question->getImage());
 
 			} else {
 				$question->setImage(null);
@@ -122,8 +123,10 @@ class QuestionController extends Controller
 
 		//__ View
 		return $this->render(
-			'question/index.html.twig',
-			array('form' => $form->createView())
+			'question/index.html.twig', array(
+			    'form' => $form->createView(),
+			    'constant' => new Constant()
+			)
 		);
 	}
 
@@ -171,24 +174,30 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('userQuizz');
 	    }
 
+	    if($question->getImage() === null) {
+
+	        $question->setImage(new Image());
+	    }
+
+	    foreach ($question->getAnswers() as $answer) {
+
+	        if($answer->getImage() === null) {
+
+	            $answer->setImage(new Image());
+	        }
+	    }
+
 	    //__ On hydrate nos entités avec les données récupéré en base de données, sauf pour les entitées images
 	    $form = $this->createForm(QuestionType::class, $question);
 
         //__ On vérifie le formulaire
 	    $form->handleRequest($request);
 
-	    $image = $question->getImage();
-
 	    //__ Si le formulaire est soumis et qu'il est valide on enregistre nos entités en base de données
 	    if ($form->isSubmitted() && $form->isValid())
 	    {
 
 	        $entityManager = $this->getDoctrine()->getManager();
-
-	        if($question->getImage() === null) {
-
-	            $question->setImage(new Image());
-	        }
 
 	        //__ Si l'utilisateur associe une nouvelle image à la question, on remplace l'ancienne par la nouvelle
 	        if($question->getImage()->getFile() != null) {
@@ -231,11 +240,6 @@ class QuestionController extends Controller
 	                $answer->setCreated(new \DateTime());
 	                $answer->setUpdated(new \DateTime());
 	                $answer->setQuestion($question);
-	            }
-
-	            if($answer->getImage() === null) {
-
-	                $answer->setImage(new Image());
 	            }
 
 	            if($answer->getImage()->getFile() != null) {
@@ -281,15 +285,13 @@ class QuestionController extends Controller
 	        return $this->redirectToRoute('editQuizz', array('id' => $id));
 	    }
 
-		$constant = new Constant();
-
 
 	    //__ View
 	    return $this->render(
 	        'question/index.html.twig',
 	        array(
 	            'form' => $form->createView(),
-	            'constant' => $constant
+	            'constant' => new Constant()
 	        )
 	    );
 	}

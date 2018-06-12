@@ -22,7 +22,7 @@
 
     {{ form_row(form.entitled, {'label': 'Intitulé'}) }}
 
-    {% if form.vars.data.image.url is defined %}
+    {% if form.vars.data.image.url is not null %}
 
         <div class="question-img-wrap">
 
@@ -39,8 +39,11 @@
         data-widget-tags="{{ '<li></li>'|e }}">
         {% for answerField in form.answers %}
             <li>
-                {% if answerField.vars.data.image.url is defined %}
-                    <img src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answerField.vars.data.image.url ) }}">
+                {% if answerField.vars.data.image.url is not null %}
+                    <div class="question-img-wrap">
+                    	<div class="question-img-header"><button class="img-delete-button">X</button></div>
+                        <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answerField.vars.data.image.url ) }}">
+                    </div>
                 {% endif %}
 
                 {{ form_errors(answerField) }}
@@ -66,7 +69,7 @@
        class="add-another-collection-widget"
        data-list="#answer-fields-list">Ajouter une réponse</a>
 
-    <button type="submit">Créer!</button>
+    <button type="submit">Mettre à jour!</button>
     {{ form_end(form) }}
 
 {% endblock %}
