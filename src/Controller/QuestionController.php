@@ -41,8 +41,6 @@ class QuestionController extends Controller
 
         //__ Initialisation des instances question et image
 		$question = new Question();
-		$image = new Image();
-		$question->setImage($image);
 
 		for($i = 0; $i < 2; $i++){
 		    ${'answer_'.$i} = new Answer();
@@ -285,21 +283,13 @@ class QuestionController extends Controller
 
 		$constant = new Constant();
 
-	    $answers = $question->getAnswers();
-
-		foreach ( $answers as $answer )
-		{
-			$imagesA[] = $answer->getImage();
-	    }
 
 	    //__ View
 	    return $this->render(
 	        'question/index.html.twig',
 	        array(
 	            'form' => $form->createView(),
-		        'image' => $image,
-	            'constant' => $constant,
-		        'imagesA' => $imagesA
+	            'constant' => $constant
 	        )
 	    );
 	}

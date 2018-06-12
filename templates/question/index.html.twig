@@ -22,13 +22,13 @@
 
     {{ form_row(form.entitled, {'label': 'Intitulé'}) }}
 
-    {% if image is defined %}
+    {% if form.vars.data.image.url is defined %}
 
         <div class="question-img-wrap">
 
             {#<i class="far fa-times-circle"></i>#}
             <div class="question-img-header"><button class="img-delete-button">X</button></div>
-            <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ image.url) }}">
+            <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ form.vars.data.image.url) }}">
         </div>
     {% endif %}
 
@@ -39,12 +39,25 @@
         data-widget-tags="{{ '<li></li>'|e }}">
         {% for answerField in form.answers %}
             <li>
-                {% if imagesA[loop.index] is defined %}
-                <img src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ imagesA[loop.index].url) }}">
+                {% if answerField.vars.data.image.url is defined %}
+                    <img src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answerField.vars.data.image.url ) }}">
                 {% endif %}
 
                 {{ form_errors(answerField) }}
                 {{ form_widget(answerField) }}
+
+               {#{{ form_errors(answerField.entitled) }}#}
+               {#{{ form_widget(answerField.entitled) }}#}
+
+               {#{{ form_errors(answerField.correct) }}#}
+               {#{{ form_widget(answerField.correct) }}#}
+
+               {#{{ form_errors(answerField.explanation) }}#}
+               {#{{ form_widget(answerField.explanation) }}#}
+
+               {#{{ form_errors(answerField.image.file) }}#}
+               {#{{ form_widget(answerField.image.file) }}#}
+
             </li>
         {% endfor %}
     </ul>
