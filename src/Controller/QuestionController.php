@@ -296,5 +296,30 @@ class QuestionController extends Controller
 	    );
 	}
 
+	/**
+	 * @Route("profile/quizz/{id}/question/{questionId}/removeImage/", name="removeQuestionImage", requirements={"id"="\d+", "questionId"="\d+"})
+	 */
+	public function removeImageAjax($id, $questionId, ImageService $imageService, SecurityChecker $securityChecker, Request $request) {
 
+	    $status = true;
+	    //__ On vérifie que les variable récupéré en get soient cohérentes (question qui correspond au quizz etc..)
+	    try {
+
+	        $question = $securityChecker->getCheckedQuestion($id, $questionId);
+
+	        $imageService->removeImage( $question->getImage() ,Constant::PATH_IMAGE_QUESTION);
+
+	        $entityManager = $this->getDoctrine()->getManager();
+	        $entityManager->remove($question->getImage());
+	        $question->setImage(null);
+	        $entityManager->persist($question);
+	        $entityManager->flush();
+
+	    } catch (\Exception $e) {
+
+	        $status = false;
+ 	    }
+	    $button = $request->request->get('idButton');
+	    return $this->json(array('status' => $status, 'idButton' => $button));
+	}
 }

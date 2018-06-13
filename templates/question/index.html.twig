@@ -24,10 +24,10 @@
 
     {% if form.vars.data.image.url is not null %}
 
-        <div class="question-img-wrap">
+        <div class="img-wrap">
 
             {#<i class="far fa-times-circle"></i>#}
-            <div class="question-img-header"><button class="img-delete-button">X</button></div>
+            <div class="img-header"><button id="{{ form.vars.data.quizz.id }}_question_{{ form.vars.data.id }}" class="img-delete-button">X</button></div>
             <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_QUESTION', constant) ~ form.vars.data.image.url) }}">
         </div>
     {% endif %}
@@ -40,8 +40,8 @@
         {% for answerField in form.answers %}
             <li>
                 {% if answerField.vars.data.image.url is not null %}
-                    <div class="question-img-wrap">
-                    	<div class="question-img-header"><button class="img-delete-button">X</button></div>
+                    <div class="img-wrap">
+                    	<div class="img-header"><button class="img-delete-button" data-type="answer_{{ answerField.vars.data.id }}">X</button></div>
                         <img class="question-img edit" src="{{ asset(constant('PATH_IMAGE_ANSWER', constant) ~ answerField.vars.data.image.url ) }}">
                     </div>
                 {% endif %}

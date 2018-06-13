@@ -1,5 +1,13 @@
 require('../css/addQuestion.css');
 
+function updateDeleteImage(data){
+	
+	if(data.status) {
+		$target = $("#"+data.idButton).parent().parent();
+		$target.hide('slow', function(){ $target.remove(); });
+	} 
+}
+
 $(function() {
 	$('.add-another-collection-widget').click(function (e) {
 
@@ -55,8 +63,16 @@ $(function() {
 	$('.img-delete-button').click(function (e) {
 
         e.preventDefault();
+        
+        let id = $(this).attr('id');
+        
+        let parameters = id.split('_');
+        
+        if(parameters[1] == 'question') {
+        
+        	$.post('/profile/quizz/'+parameters[0]+'/question/'+parameters[2]+'/removeImage/', {idButton: id}, updateDeleteImage);
+        }
 
-
-    })
+    })   
 
 });

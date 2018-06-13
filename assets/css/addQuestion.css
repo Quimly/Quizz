@@ -7,7 +7,7 @@
 	background-image: url("../background/footer_lodyas.png");
 }
 
-.question-img-wrap {
+.img-wrap {
 	background-color: white;
 	width: 250px;
 	border-radius: 6px;
@@ -15,7 +15,7 @@
 	text-align: center;
 }
 
-.question-img-header {
+.img-header {
 	border-bottom: 1px solid #ced4da;
 	border-top-right-radius: 6px;
 	border-top-left-radius: 6px;
