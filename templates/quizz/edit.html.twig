@@ -32,13 +32,13 @@
                 <p class="description-quizz">Aucune description</p>
             {% endif %}
             
-            <p><a class="delete" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer le quizz</a></p>
-            <p><a class="add" href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a></p>
+            <p><a class="btn btn-danger" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer le quizz</a></p>
+            <p><a class="btn btn-success" href="{{ path('addQuestion', { 'id' : quizz.id })}}">Ajouter une question</a></p>
             
             {% if quizz.questions|length > 0 %}
             	<p>
-            		<button class="show-details-all-questions">Afficher toutes les questions</button>
-            		<button class="hide-details-all-questions">Masquer toutes les questions</button>
+            		<button class="btn btn-primary show-details-all-questions">Afficher toutes les questions</button>
+            		<button class="btn btn-primary hide-details-all-questions">Masquer toutes les questions</button>
         		</p>
             {% endif %}
         </div>
@@ -54,12 +54,12 @@
 		<div class="question-wrap background-theme-1">
 		
 			<p>Question n°{{loop.index}} : {{ question.entitled }} 
-				<button class="show-details-question">Afficher</button>
-				<button class="hide-details-question">Masquer</button>
+				<button class="btn btn-primary show-details-question">Afficher</button>
+				<button class="btn btn-primary hide-details-question">Masquer</button>
 				
 				{% if question.answers|length > 0 %}
-    				<button class="show-details-all-answers">Afficher toutes les réponses</button>
-    				<button class="hide-details-all-answers">Masquer toutes les réponses</button>
+    				<button class="btn btn-primary show-details-all-answers">Afficher toutes les réponses</button>
+    				<button class="btn btn-primary hide-details-all-answers">Masquer toutes les réponses</button>
 				{% endif %}
 			</p>
 			
@@ -74,8 +74,8 @@
                                 <span>(non publié)</span>
                             {% endif %}
                     
-                            <p><a class="delete" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer la question</a></p>
-                            <p><a class="add" href="{{ path('editQuestion', { 'id' : quizz.id, 'questionId' : question.id })}}">Editer la question</a></p>
+                            <p><a class="btn btn-danger" href="{{ path('removeQuestion', { 'id' : quizz.id, 'questionId' : question.id }) }}">Supprimer la question</a></p>
+                            <p><a class="btn btn-success" href="{{ path('editQuestion', { 'id' : quizz.id, 'questionId' : question.id })}}">Editer la question</a></p>
 
                     </div>
                     
@@ -91,7 +91,7 @@
                 
         			<div class="answer-wrap {% if answer.correct %}true-answer{% else %}false-answer{% endif %}">
         			
-            			<p>Réponse n°{{loop.index}} : {{ answer.entitled }}  <button class="show-details-answer">Afficher</button><button class="hide-details-answer">Masquer</button></p>
+            			<p>Réponse n°{{loop.index}} : {{ answer.entitled }}  <button class="btn btn-primary show-details-answer">Afficher</button><button class="btn btn-primary hide-details-answer">Masquer</button></p>
             			
             			<div class="container-answer">
             			
@@ -113,7 +113,7 @@
                                         {% endif %}
                                     </p>
                                     
-                                    <p><a class="delete" href="{{ path('removeAnswer', { 'id' : quizz.id, 'questionId' : question.id, 'answerId' : answer.id }) }}">Supprimer le réponse</a></p>
+                                    <p><a class="btn btn-danger" href="{{ path('removeAnswer', { 'id' : quizz.id, 'questionId' : question.id, 'answerId' : answer.id }) }}">Supprimer le réponse</a></p>
                                 </div>
                                 
                                 <div>                    

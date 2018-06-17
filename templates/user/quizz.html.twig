@@ -24,7 +24,7 @@
                 {% endif %}
             </li>
             
-            <a class="delete" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
+            <a class="btn btn-danger" href="{{ path('removeQuizz', { 'id' : quizz.id })}}">Supprimer</a>
         </div>
 
     {% endfor %}

@@ -12,21 +12,19 @@
             {% if error %}
                 <div id="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
-            <table>
-                <tr>
+            
+                <div class="form-group">
                 	<td><label for="username">Pseudo</label></td>
-                    <td><input type="text" id="username" name="_username" value="{{ last_username }}" /></td>
-                </tr>
+                    <td><input class = "form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Pseudo" /></td>
+                </div>
     
-                <tr>
+                <div class="form-group">
                 	<td><label for="password">Mot de passe</label></td>
-                    <td><input type="password" id="password" name="_password" /></td>
-                </tr>
-                <tr>
-                	<td></td>
-                    <td class="button"><button type="submit">Connexion</button></td>
-                </tr>
-            </table>
+                    <td><input class = "form-control" type="password" id="password" name="_password" placeholder="Mot de passe" /></td>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Connexion</button>
+           
 
             {#
                 If you want to control the URL the user

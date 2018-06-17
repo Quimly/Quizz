@@ -12,7 +12,7 @@
 
 {% block body %}
 
-    <div class="form_wrap">
+    <div class="form_wrap" >
 
     {{ form_start(form, {'attr': {'class': 'form_main' }}) }}
 
@@ -21,7 +21,7 @@
         {{ form_row(form.plainPassword.first, {'label': 'Mot de passe'}) }}
         {{ form_row(form.plainPassword.second, {'label': 'Confirmation'}) }}
 
-        <button type="submit">Valider !</button>
+        <button type="submit" class="btn btn-primary">Valider !</button>
 
     {{ form_end(form) }}
 

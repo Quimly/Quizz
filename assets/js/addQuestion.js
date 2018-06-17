@@ -4,7 +4,7 @@ function updateDeleteImage(data){
 	
 	if(data.status) {
 		$target = $("#"+data.idButton).parent().parent();
-		$target.hide('slow', function(){ $target.remove(); });
+		$target.hide('fast', function(){ $target.remove(); });
 	} 
 }
 
@@ -46,7 +46,7 @@ $(function() {
 
         // create a new list element and add it to the list
         let newElem = $(list.attr('data-widget-tags')).html(newWidget);
-        newElem.append('<a href="#" class="remove-tag">x</a>');
+        newElem.append('<a href="#" class="btn btn-danger remove-tag">x</a>');
         newElem.appendTo(list);
 
 
@@ -71,6 +71,10 @@ $(function() {
         if(parameters[1] == 'question') {
         
         	$.post('/profile/quizz/'+parameters[0]+'/question/'+parameters[2]+'/removeImage/', {idButton: id}, updateDeleteImage);
+        	
+        } else if (parameters[1] == 'answer') {
+        	
+        	$.post('/profile/quizz/'+parameters[0]+'/question/'+parameters[3]+'/answer/'+parameters[2]+'/removeImage/', {idButton: id}, updateDeleteImage);
         }
 
     })   
