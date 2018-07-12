@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <body>
+        <canvas id="gameCanvas" width="960" height="640"></canvas>
+        {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('flappy/js/cocos2d-js-v3.3-lite.js') }}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{{ asset('flappy/js/jquery.min.js') }}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{{ asset('flappy/js/config.js') }}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{{ asset('flappy/js/cloud.js') }}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{{ asset('flappy/js/robin.js') }}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{{ asset('flappy/js/game.js') }}" charset="UTF-8"></script>
+        {% endblock %}
+    </body>
+{% endblock %}
+
+
