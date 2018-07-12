@@ -134,7 +134,7 @@ $(function () {
 
         cc.view.adjustViewPort(false);
         cc.view.setDesignResolutionSize(targetWidth, targetHeight, cc.ResolutionPolicy.SHOW_ALL);
-        cc.view.resizeWithBrowserSize(true);
+        cc.view.resizeWithBrowserSize(false);
 
         //load resources
         cc.LoaderScene.preload(["images/HelloWorld.png"], function () {
