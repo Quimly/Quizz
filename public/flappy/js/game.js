@@ -44,7 +44,7 @@ let GameLayer = cc.Layer.extend({
 
         this._gameOverLabel = this.addLabel("Game Over!",size.width / 2, size.height / 2, FALSE, kZindexRobin,
             cc.color.RED, kFontSizeGameOver );
-        this._gameStartLabel = this.addLabel("Cliquez Pour Commencer", size.width / 2, size.height /  3 * 2, TRUE, kZindexRobin,
+        this._gameStartLabel = this.addLabel("Cliquez pour commencer", size.width / 2, size.height /  3 * 2, TRUE, kZindexRobin,
             cc.color.RED, kFontSizeGameOver );
         this._scoreLabel = this.addLabel("00000", kScoreX, size.height - kScoreY, TRUE, kZindexRobin,
             cc.color.RED, kFontSizeScore );
