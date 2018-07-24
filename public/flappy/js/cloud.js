@@ -1,5 +1,3 @@
-'use strict';
-
 let CloudSprite = cc.Sprite.extend({
 
     screenWidth: 0.0,

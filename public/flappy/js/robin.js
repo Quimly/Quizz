@@ -1,5 +1,3 @@
-'use strict';
-
 let RobinSprite = cc.Sprite.extend({
 
     state: kRobinStateStopped,
@@ -38,6 +36,12 @@ let RobinSprite = cc.Sprite.extend({
     },
 
     TubeCollisionBox: function () {
+        return new cc.Rect(
+            this.getBoundingBox().x + 25,
+            this.getBoundingBox().y + 5,
+            this.getBoundingBox().width - 30,
+            this.getBoundingBox().height - 20
+        );
     }
 
 });
