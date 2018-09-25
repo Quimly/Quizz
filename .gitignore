@@ -8,6 +8,7 @@
 
 ###> symfony/webpack-encore-pack ###
 /node_modules/
+/public/build/images/
 /public/build/
 /public/img/
 npm-debug.log

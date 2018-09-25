@@ -23,6 +23,7 @@ Encore
     .addEntry('asset/quizz/userList', './assets/js/userQuizzList.js')
     .addEntry('asset/quizz/detailQuizz', './assets/js/detailQuizz.js')
     .addEntry('asset/game_life/game_life', './assets/js/game_life.js')
+    .addEntry('asset/primes/primes', './assets/js/primes.js')
     
     
     //.addStyleEntry('css/app', './assets/css/base.css')

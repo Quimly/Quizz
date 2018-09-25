@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game of life!{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('build/asset/primes/primes.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('build/asset/primes/primes.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Spirale de ulam</h1>
+    <div id="life"></div>
+    <figcaption>Les nombres premiers de 0 à 90000 reprensentés sur une spirale</figcaption>
+{% endblock %}

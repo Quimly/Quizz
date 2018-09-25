@@ -1,0 +1,27 @@
+body
+{
+    background-color: dimgray;
+    text-align: center;
+}
+#life
+{
+    display: inline-block;
+}
+#data
+{
+    border-collapse: collapse;
+}
+#data td
+{
+    /*border: 1px solid grey;*/
+    width: 1px;
+    height: 1px;
+}
+#data .dead
+{
+    background-color: white;
+}
+#data .alive
+{
+    background-color: lightblue;
+}
