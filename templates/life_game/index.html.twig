@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game of life!{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('build/asset/game_life/game_life.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+	<script>
+      	let cellSize = {{ cellSize }};
+      	let nbCol = {{ X }};
+      	let nbLine = {{ Y }};
+      	let speed = {{ speed }} ;	
+  	</script>
+  	<script src="{{ asset('build/asset/game_life/game_life.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Jeu de la vie</h1>
+<div id="container">
+	<div id="game">
+    	<table id="gameTable">
+    	{% for i in 0..Y - 1 %}
+    		<tr>
+    	    {% for j in 0..X - 1 %}
+    	    	<td id="X{{ loop.index  }}Y{{ loop.parent.loop.index }}"></td>
+    	    {% endfor %}
+    	    </tr>
+    	{% endfor %}
+    	</table>
+		<p><button id="start">Go</button><button id="stop">Stop</button></p>
+	</div>
+	<div id="params">
+			<form action="" method="POST">
+				<div class="paramForm">
+					<label for="nbCol">Nombre de colonnes:</label>
+					<input type="number" id="nbCol" name="nbCol" value="{{ X }}">
+				</div>
+				<div class="paramForm">
+					<label for="nbLine">Nombre de lignes:</label>
+					<input type="number" id="nbLine" name="nbLine" value="{{ Y }}">
+				</div>
+				<div>
+					<label for="cellSize">Taille des cellules:</label>
+					<input type="range" min="{{ constant('CELL_SIZE_MIN') }}" max="{{ constant('CELL_SIZE_MAX') }}" id="cellSize" name="cellSize" value="{{ cellSize }}">
+				</div>
+				<div>
+					<label for="speed">Vitesse de lecture:</label>
+					<input type="range" min="{{ constant('SPEED_MAX') }}" max="{{ constant('SPEED_MIN') }}" id="speed" name="speed" value="{{ speed }}">
+				</div>
+				<input type="submit">
+			</form>
+		</div>
+	</div>
+<hr />
+<div id="menu">
+	<input id ="step" type="submit"  value="STEP">
+</div>
+
+{% endblock %}
